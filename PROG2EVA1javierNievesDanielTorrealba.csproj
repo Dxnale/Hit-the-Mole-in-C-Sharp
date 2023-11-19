@@ -97,15 +97,6 @@
     <None Include="Resources\topo-VACIO.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\_aae4e13b-e794-4319-bc96-fc0927a71c13.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\_6ece752d-863f-4622-bbc4-d87f434b02f3.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\_892d251a-e16f-4699-bd63-d602819fd942.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\FONDO.png" />
   </ItemGroup>
   <ItemGroup>

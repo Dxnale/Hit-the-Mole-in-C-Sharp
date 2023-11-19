@@ -81,23 +81,25 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 topos[x, y].Aparicion();
                 pictureBoxes[x, y].Image = topos[x, y].Imagen;
 
-                if (dificultadActual == medium)
+                if (dificultadActual <= medium)
                 {
                     x = rnd.Next(0, 3);
                     y = rnd.Next(0, 3);
+
                     if (topos[x, y].Estado == false)
                     {
                         topos[x, y].Aparicion();
                         pictureBoxes[x, y].Image = topos[x, y].Imagen;
-                    }
-                    if (dificultadActual == hard)
-                    {
-                        x = rnd.Next(0, 3);
-                        y = rnd.Next(0, 3);
-                        if (topos[x, y].Estado == false)
+
+                        if (dificultadActual == hard)
                         {
-                            topos[x, y].Aparicion();
-                            pictureBoxes[x, y].Image = topos[x, y].Imagen;
+                            x = rnd.Next(0, 3);
+                            y = rnd.Next(0, 3);
+                            if (topos[x, y].Estado == false)
+                            {
+                                topos[x, y].Aparicion();
+                                pictureBoxes[x, y].Image = topos[x, y].Imagen;
+                            }
                         }
                     }
                 }
@@ -130,7 +132,6 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             this.pictureBoxes[i, j].SizeMode = PictureBoxSizeMode.Zoom;
             this.pictureBoxes[i, j].Click += TopoClick;
         }
-
         private async void TopoClick(object pictureBox, EventArgs evento)
         {
             PictureBox pb = (PictureBox)pictureBox;
@@ -150,7 +151,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 fails++;
                 lblScoreFallas.Text = fails.ToString();
                 ActualizarFails();
-                
+
             }
 
             await Task.Delay(dificultadActual);
