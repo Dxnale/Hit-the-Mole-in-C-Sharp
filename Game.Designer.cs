@@ -218,7 +218,7 @@
             this.btnReset.Text = "RESET";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Visible = false;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
+            this.btnReset.Click += new System.EventHandler(this.BtnReset_Click);
             // 
             // panelJuego
             // 

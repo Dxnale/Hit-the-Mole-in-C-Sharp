@@ -6,23 +6,22 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 {
     public partial class Game : Form
     {
-        private Topo[,] topos = new Topo[3, 3];
-        private PictureBox[,] pictureBoxes = new PictureBox[3, 3];
-        private Random rnd = new Random();
+        private readonly Topo[,] topos = new Topo[3, 3];
+        private readonly PictureBox[,] pictureBoxes = new PictureBox[3, 3];
+        private readonly Random rnd = new Random();
 
-        private string player;
+        private readonly string player;
         private int score = 0;
         private int fails = 0;
 
-        private Timer timerAparece = new Timer();
-        private Timer timerDesaparece = new Timer();
+        private Timer timerAparece;
+        private Timer timerDesaparece;
 
-        private const int baby = 1500;
-        private const int easy = 750;
-        private const int medium = 500;
-        private const int hard = 250;
+        private const int Baby = 1500;
+        private const int Easy = 750;
+        private const int Medium = 500;
+        private const int Hard = 250;
         private int dificultadActual;
-
 
         public Game(string player)
         {
@@ -49,9 +48,8 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 }
             }
 
-            TimerDificultad(baby);
+            TimerDificultad(Baby);
         }
-
         private void StartTimers()
         {
             timerAparece?.Stop();
@@ -70,7 +68,6 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             timerAparece.Start();
             timerDesaparece.Start();
         }
-
         private void TimerAparicion(object sender, EventArgs e)
         {
             int x = rnd.Next(0, 3);
@@ -81,28 +78,43 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 topos[x, y].Aparicion();
                 pictureBoxes[x, y].Image = topos[x, y].Imagen;
 
-                if (dificultadActual <= medium)
+                if (dificultadActual <= Medium)
                 {
-                    x = rnd.Next(0, 3);
-                    y = rnd.Next(0, 3);
+                    int w = rnd.Next(0, 3);
+                    int k = rnd.Next(0, 3);
 
-                    if (topos[x, y].Estado == false)
+                    if (topos[w, k].Estado == false && (w != x && k != y))
                     {
-                        topos[x, y].Aparicion();
-                        pictureBoxes[x, y].Image = topos[x, y].Imagen;
+                        topos[w, k].Aparicion();
+                        pictureBoxes[w, k].Image = topos[w, k].Imagen;
 
-                        if (dificultadActual == hard)
+                        if (dificultadActual == Hard)
                         {
-                            x = rnd.Next(0, 3);
-                            y = rnd.Next(0, 3);
-                            if (topos[x, y].Estado == false)
+                            w = rnd.Next(0, 3);
+                            k = rnd.Next(0, 3);
+                            if (topos[w, k].Estado == false)
                             {
-                                topos[x, y].Aparicion();
-                                pictureBoxes[x, y].Image = topos[x, y].Imagen;
+                                topos[w, k].Aparicion();
+                                pictureBoxes[w, k].Image = topos[w, k].Imagen;
+                            }
+                            else
+                            {
+                                topos[w, k].Desaparicion();
+                                pictureBoxes[w, k].Image = topos[w, k].Imagen;
                             }
                         }
                     }
+                    else
+                    {
+                        topos[w, k].Desaparicion();
+                        pictureBoxes[w, k].Image = topos[w, k].Imagen;
+                    }
                 }
+            }
+            else
+            {
+                topos[x, y].Desaparicion();
+                pictureBoxes[x, y].Image = topos[x, y].Imagen;
             }
 
             ActualizarDificultad();
@@ -144,6 +156,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 pictureBoxes[i, j].Image = Properties.Resources.topo_UP;
                 score += 1000;
                 lblScorePuntos.Text = score.ToString();
+                ActualizarScore();
             }
             else
             {
@@ -158,26 +171,27 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             topos[i, j].Desaparicion();
             pictureBoxes[i, j].Image = topos[i, j].Imagen;
         }
-
+        private void ActualizarScore()
+        {
+        }
         private void ActualizarDificultad()
         {
             switch (score)
             {
                 case 12000:
-                    TimerDificultad(easy);
+                    TimerDificultad(Easy);
                     lblShowDificultad.Text = "FACILITO";
                     break;
                 case 24000:
-                    TimerDificultad(medium);
+                    TimerDificultad(Medium);
                     lblShowDificultad.Text = "MEDIO";
                     break;
                 case 30000:
-                    TimerDificultad(hard);
+                    TimerDificultad(Hard);
                     lblShowDificultad.Text = "INFIERNO";
                     break;
             }
         }
-
         private void ActualizarFails()
         {
             if (fails == 3)
@@ -198,38 +212,35 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
             }
         }
-
         private void TimerDificultad(int dificultad)
         {
             dificultadActual = dificultad;
 
             switch (dificultad)
             {
-                case baby:
-                    timerAparece.Interval = baby;
-                    timerDesaparece.Interval = baby;
+                case Baby:
+                    timerAparece.Interval = Baby;
+                    timerDesaparece.Interval = Baby;
                     break;
-                case easy:
-                    timerAparece.Interval = easy;
-                    timerDesaparece.Interval = easy;
+                case Easy:
+                    timerAparece.Interval = Easy;
+                    timerDesaparece.Interval = Easy;
                     break;
-                case medium:
-                    timerAparece.Interval = medium;
-                    timerDesaparece.Interval = medium;
+                case Medium:
+                    timerAparece.Interval = Medium;
+                    timerDesaparece.Interval = Medium;
                     break;
-                case hard:
-                    timerAparece.Interval = hard;
-                    timerDesaparece.Interval = hard;
+                case Hard:
+                    timerAparece.Interval = Hard;
+                    timerDesaparece.Interval = Hard;
                     break;
             }
         }
-
-        private void btnReset_Click(object sender, EventArgs e)
+        private void BtnReset_Click(object sender, EventArgs e)
         {
             EndGame();
             StartGame();
         }
-
         private void EndGame()
         {
             score = 0;
