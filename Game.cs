@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -73,52 +74,57 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             int x = rnd.Next(0, 3);
             int y = rnd.Next(0, 3);
 
-            if (topos[x, y].Estado == false)
+            if (!topos[x, y].Estado)
             {
                 topos[x, y].Aparicion();
-                pictureBoxes[x, y].Image = topos[x, y].Imagen;
-
-                if (dificultadActual <= Medium)
-                {
-                    int w = rnd.Next(0, 3);
-                    int k = rnd.Next(0, 3);
-
-                    if (topos[w, k].Estado == false && (w != x && k != y))
-                    {
-                        topos[w, k].Aparicion();
-                        pictureBoxes[w, k].Image = topos[w, k].Imagen;
-
-                        if (dificultadActual == Hard)
-                        {
-                            w = rnd.Next(0, 3);
-                            k = rnd.Next(0, 3);
-                            if (topos[w, k].Estado == false)
-                            {
-                                topos[w, k].Aparicion();
-                                pictureBoxes[w, k].Image = topos[w, k].Imagen;
-                            }
-                            else
-                            {
-                                topos[w, k].Desaparicion();
-                                pictureBoxes[w, k].Image = topos[w, k].Imagen;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        topos[w, k].Desaparicion();
-                        pictureBoxes[w, k].Image = topos[w, k].Imagen;
-                    }
-                }
+                ActualizarImagen(pictureBoxes[x, y], topos[x, y].Imagen);
             }
             else
             {
                 topos[x, y].Desaparicion();
-                pictureBoxes[x, y].Image = topos[x, y].Imagen;
+                ActualizarImagen(pictureBoxes[x, y], topos[x, y].Imagen);
+                return;
+            }
+
+
+            if (dificultadActual <= Medium)
+            {
+                AparicionAdicional(x, y);
             }
 
             ActualizarDificultad();
+        }
+        private void AparicionAdicional(int x, int y)
+        {
+            int w = rnd.Next(0, 3);
+            int k = rnd.Next(0, 3);
 
+            if (topos[w, k].Estado || (w == x && k == y))
+            {
+                topos[w, k].Desaparicion();
+                ActualizarImagen(pictureBoxes[w, k], topos[w, k].Imagen);
+                return;
+            }
+
+            topos[w, k].Aparicion();
+            ActualizarImagen(pictureBoxes[w, k], topos[w, k].Imagen);
+
+            if (dificultadActual == Hard)
+            {
+                w = rnd.Next(0, 3);
+                k = rnd.Next(0, 3);
+
+                if (!topos[w, k].Estado)
+                {
+                    topos[w, k].Aparicion();
+                    ActualizarImagen(pictureBoxes[w, k], topos[w, k].Imagen);
+                }
+                else
+                {
+                    topos[w, k].Desaparicion();
+                    ActualizarImagen(pictureBoxes[w, k], topos[w, k].Imagen);
+                }
+            }
         }
         private void TimerDesaparicion(object sender, EventArgs e)
         {
@@ -129,7 +135,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                     if (topos[i, j].Estado == true)
                     {
                         topos[i, j].Desaparicion();
-                        pictureBoxes[i, j].Image = topos[i, j].Imagen;
+                        ActualizarImagen(pictureBoxes[i, j], topos[i, j].Imagen);
                     }
                 }
             }
@@ -144,6 +150,13 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             this.pictureBoxes[i, j].SizeMode = PictureBoxSizeMode.Zoom;
             this.pictureBoxes[i, j].Click += TopoClick;
         }
+        private void ActualizarImagen(PictureBox pictureBox, Bitmap imagen)
+        {
+            pictureBox.Invoke((MethodInvoker)delegate
+            {
+                pictureBox.Image = imagen;
+            });
+        }
         private async void TopoClick(object pictureBox, EventArgs evento)
         {
             PictureBox pb = (PictureBox)pictureBox;
@@ -153,14 +166,14 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
             if (topos[i, j].Estado)
             {
-                pictureBoxes[i, j].Image = Properties.Resources.topo_UP;
+                ActualizarImagen(pictureBoxes[i, j], Properties.Resources.topo_UP);
                 score += 1000;
                 lblScorePuntos.Text = score.ToString();
                 ActualizarScore();
             }
             else
             {
-                pictureBoxes[i, j].Image = Properties.Resources.topo_FAIL;
+                ActualizarImagen(pictureBoxes[i, j], Properties.Resources.topo_FAIL);
                 fails++;
                 lblScoreFallas.Text = fails.ToString();
                 ActualizarFails();
@@ -169,7 +182,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
             await Task.Delay(dificultadActual);
             topos[i, j].Desaparicion();
-            pictureBoxes[i, j].Image = topos[i, j].Imagen;
+            ActualizarImagen(pictureBoxes[i, j], topos[i, j].Imagen);
         }
         private void ActualizarScore()
         {
@@ -243,17 +256,17 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private void EndGame()
         {
+            timerAparece?.Stop();
+            timerAparece?.Dispose();
+            timerDesaparece?.Stop();
+            timerDesaparece?.Dispose();
+
             score = 0;
             fails = 0;
             lblScorePuntos.Text = score.ToString();
             lblScoreFallas.Text = fails.ToString();
             lblShowDificultad.Text = "REGALADO";
             btnReset.Visible = false;
-
-            timerAparece?.Stop();
-            timerAparece?.Dispose();
-            timerDesaparece?.Stop();
-            timerDesaparece?.Dispose();
 
             panelJuego.Controls.Clear();
         }
