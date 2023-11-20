@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -7,6 +9,8 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 {
     public partial class Game : Form
     {
+
+        private TablaPuntos tablaPuntos = new TablaPuntos();
         private readonly Topo[,] topos = new Topo[3, 3];
         private readonly PictureBox[,] pictureBoxes = new PictureBox[3, 3];
         private readonly Random rnd = new Random();
@@ -33,7 +37,9 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             lblShowDificultad.Text = "REGALADO";
             btnReset.Visible = false;
 
+            MostrarScores();
             StartGame();
+
         }
         private void StartGame()
         {
@@ -93,6 +99,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             }
 
             ActualizarDificultad();
+            MostrarScores();
         }
         private void AparicionAdicional(int x, int y)
         {
@@ -169,24 +176,33 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 ActualizarImagen(pictureBoxes[i, j], Properties.Resources.topo_UP);
                 score += 1000;
                 lblScorePuntos.Text = score.ToString();
-                ActualizarScore();
             }
             else
             {
                 ActualizarImagen(pictureBoxes[i, j], Properties.Resources.topo_FAIL);
                 fails++;
                 lblScoreFallas.Text = fails.ToString();
-                ActualizarFails();
 
+                ActualizarFails();
+                MostrarScores();
             }
 
             await Task.Delay(dificultadActual);
+
             topos[i, j].Desaparicion();
             ActualizarImagen(pictureBoxes[i, j], topos[i, j].Imagen);
         }
         private void ActualizarScore()
         {
+            tablaPuntos.ActualizarScore(player, score);
+            MostrarScores();
         }
+        private void MostrarScores()
+        {
+            DataTable topScores = tablaPuntos.ObtenerTopScores();
+            dataGridViewScores.DataSource = topScores;
+        }
+
         private void ActualizarDificultad()
         {
             switch (score)
@@ -221,6 +237,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 timerAparece?.Stop();
                 timerDesaparece?.Stop();
                 btnReset.Visible = true;
+                ActualizarScore();
                 MessageBox.Show($"Has perdido {player}.\nTu puntuación es de {score} puntos.", "Game Over", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
             }

@@ -1,4 +1,6 @@
-﻿namespace PROG2EVA1javierNievesDanielTorrealba
+﻿using System.Windows.Forms;
+
+namespace PROG2EVA1javierNievesDanielTorrealba
 {
     partial class Game
     {
@@ -28,6 +30,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Game));
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tableLPInfo = new System.Windows.Forms.TableLayoutPanel();
@@ -40,6 +46,7 @@
             this.lblDificultad = new System.Windows.Forms.Label();
             this.lblShowDificultad = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
+            this.dataGridViewScores = new System.Windows.Forms.DataGridView();
             this.panelJuego = new System.Windows.Forms.TableLayoutPanel();
             this.panelMarginR = new System.Windows.Forms.Panel();
             this.panelMarginB = new System.Windows.Forms.Panel();
@@ -50,6 +57,7 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tableLPInfo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScores)).BeginInit();
             this.panelMarginT.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -95,6 +103,7 @@
             this.tableLPInfo.Controls.Add(this.lblDificultad, 1, 4);
             this.tableLPInfo.Controls.Add(this.lblShowDificultad, 2, 4);
             this.tableLPInfo.Controls.Add(this.btnReset, 1, 8);
+            this.tableLPInfo.Controls.Add(this.dataGridViewScores, 1, 7);
             this.tableLPInfo.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLPInfo.Location = new System.Drawing.Point(0, 0);
             this.tableLPInfo.Name = "tableLPInfo";
@@ -220,6 +229,79 @@
             this.btnReset.Visible = false;
             this.btnReset.Click += new System.EventHandler(this.BtnReset_Click);
             // 
+            // dataGridViewScores
+            // 
+            this.dataGridViewScores.AllowUserToAddRows = false;
+            this.dataGridViewScores.AllowUserToDeleteRows = false;
+            this.dataGridViewScores.AllowUserToResizeColumns = false;
+            this.dataGridViewScores.AllowUserToResizeRows = false;
+            this.dataGridViewScores.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.dataGridViewScores.BackgroundColor = System.Drawing.Color.Black;
+            this.dataGridViewScores.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridViewScores.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dataGridViewScores.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
+            this.dataGridViewScores.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewScores.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridViewScores.ColumnHeadersHeight = 29;
+            this.dataGridViewScores.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.dataGridViewScores.ColumnHeadersVisible = false;
+            this.tableLPInfo.SetColumnSpan(this.dataGridViewScores, 2);
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewScores.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridViewScores.GridColor = System.Drawing.Color.Black;
+            this.dataGridViewScores.Location = new System.Drawing.Point(55, 304);
+            this.dataGridViewScores.MultiSelect = false;
+            this.dataGridViewScores.Name = "dataGridViewScores";
+            this.dataGridViewScores.ReadOnly = true;
+            this.dataGridViewScores.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewScores.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dataGridViewScores.RowHeadersVisible = false;
+            this.dataGridViewScores.RowHeadersWidth = 51;
+            this.dataGridViewScores.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewScores.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.dataGridViewScores.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.dataGridViewScores.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.Black;
+            this.dataGridViewScores.RowTemplate.DefaultCellStyle.Font = new System.Drawing.Font("Nunito Sans", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.dataGridViewScores.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.dataGridViewScores.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.Black;
+            this.dataGridViewScores.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.dataGridViewScores.RowTemplate.DefaultCellStyle.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewScores.RowTemplate.Height = 24;
+            this.dataGridViewScores.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.dataGridViewScores.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.dataGridViewScores.ShowCellErrors = false;
+            this.dataGridViewScores.ShowCellToolTips = false;
+            this.dataGridViewScores.ShowEditingIcon = false;
+            this.dataGridViewScores.ShowRowErrors = false;
+            this.dataGridViewScores.Size = new System.Drawing.Size(239, 320);
+            this.dataGridViewScores.TabIndex = 13;
+            // 
             // panelJuego
             // 
             this.panelJuego.BackColor = System.Drawing.Color.Transparent;
@@ -240,7 +322,7 @@
             // 
             // panelMarginR
             // 
-            this.panelMarginR.BackColor = System.Drawing.Color.Transparent;
+            this.panelMarginR.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
             this.panelMarginR.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelMarginR.Location = new System.Drawing.Point(806, 60);
             this.panelMarginR.Name = "panelMarginR";
@@ -249,7 +331,7 @@
             // 
             // panelMarginB
             // 
-            this.panelMarginB.BackColor = System.Drawing.Color.Transparent;
+            this.panelMarginB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
             this.panelMarginB.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelMarginB.Location = new System.Drawing.Point(0, 657);
             this.panelMarginB.Name = "panelMarginB";
@@ -297,6 +379,7 @@
             this.splitContainer1.ResumeLayout(false);
             this.tableLPInfo.ResumeLayout(false);
             this.tableLPInfo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScores)).EndInit();
             this.panelMarginT.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -322,5 +405,6 @@
         private System.Windows.Forms.Label lblDificultad;
         private System.Windows.Forms.Label lblShowDificultad;
         private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.DataGridView dataGridViewScores;
     }
 }
