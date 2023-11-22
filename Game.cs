@@ -38,6 +38,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             btnReset.Visible = false;
 
             MostrarScores();
+            ActualizarScore();
             StartGame();
 
         }
