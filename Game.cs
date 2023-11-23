@@ -38,7 +38,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             btnReset.Visible = false;
 
             MostrarScores();
-            ActualizarScore();
+            
             StartGame();
 
         }
@@ -195,7 +195,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private void ActualizarScore()
         {
-            tablaPuntos.ActualizarScore(player, score);
+            tablaPuntos?.ActualizarScore(player, score);
             MostrarScores();
         }
         private void MostrarScores()
@@ -203,7 +203,6 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             DataTable topScores = tablaPuntos.ObtenerTopScores();
             dataGridViewScores.DataSource = topScores;
         }
-
         private void ActualizarDificultad()
         {
             switch (score)
