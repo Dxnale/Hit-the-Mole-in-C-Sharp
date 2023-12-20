@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -6,6 +7,9 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 {
     public partial class Login : Form
     {
+        //sapo
+        private List<CLASEEVALUA2danielTorrealba> logins = new List<CLASEEVALUA2danielTorrealba>();
+
         private static bool valido;
         private static string digito;
         private static readonly int[] digitosAlgoritmo = { 3, 2, 7, 6, 5, 4, 3, 2 }; //array de digitos constantes para el algoritmo
@@ -47,21 +51,24 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         {
             if (valido && ValidarRut(textBoxRut.Text) && textBoxNombre.Text != "")
             {
+                logins.Add(new CLASEEVALUA2danielTorrealba(textBoxRut.Text));
+
                 RunGame();
             }
             else
             {
+                logins.Add(new CLASEEVALUA2danielTorrealba(textBoxRut.Text, "Login Fallido"));
+
                 MessageBox.Show("Debes ingresar un nombre y RUT validos para poder jugar");
             }
         }
-
         private void RunGame()
         {
-            Game game = new Game(textBoxNombre.Text.ToUpper());
+            Game game = new Game(textBoxNombre.Text.ToUpper(),logins, textBoxRut.Text.ToUpper());
+
             game.Show();
             this.Hide();
         }
-
         private void textBoxRut_KeyPress(object sender, KeyPressEventArgs e)
         {
             //Valida que la tecla ingresada sea un numero, o una k o una K o un "-" o una tecla de control (ej: borrar)
@@ -83,7 +90,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         {
             string rut = textBoxRut.Text.Trim();
             rut = rut.Replace(".", "").Replace("-", "").ToUpper();
-            valido = Regex.IsMatch(rut, @"^\d{1,10}[kK]?$");
+            valido = Regex.IsMatch(rut, @"^\d{1,10}[kK]?$"); //valida que el rut tenga solo numeros y una k al final (anti-copypaste)
 
             resultado.ForeColor = System.Drawing.Color.White;
             resultado.Text = "Ingrese RUT";

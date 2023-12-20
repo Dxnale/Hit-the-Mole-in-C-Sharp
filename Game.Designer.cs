@@ -52,12 +52,14 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             this.panelMarginB = new System.Windows.Forms.Panel();
             this.panelMarginT = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
+            this.lblEVA2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tableLPInfo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScores)).BeginInit();
+            this.panelMarginB.SuspendLayout();
             this.panelMarginT.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -182,7 +184,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             // 
             this.lblScoreFallas.AutoSize = true;
             this.lblScoreFallas.Font = new System.Drawing.Font("Nunito Sans ExtraBold", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblScoreFallas.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.lblScoreFallas.ForeColor = System.Drawing.Color.Red;
             this.lblScoreFallas.Location = new System.Drawing.Point(175, 154);
             this.lblScoreFallas.Name = "lblScoreFallas";
             this.lblScoreFallas.Size = new System.Drawing.Size(26, 30);
@@ -332,6 +334,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             // panelMarginB
             // 
             this.panelMarginB.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
+            this.panelMarginB.Controls.Add(this.lblEVA2);
             this.panelMarginB.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelMarginB.Location = new System.Drawing.Point(0, 657);
             this.panelMarginB.Name = "panelMarginB";
@@ -361,6 +364,19 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             this.lblTitle.Text = "GOLPEA AL TOPO";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // lblEVA2
+            // 
+            this.lblEVA2.BackColor = System.Drawing.Color.Transparent;
+            this.lblEVA2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblEVA2.Font = new System.Drawing.Font("Nunito Sans ExtraBold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEVA2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(203)))), ((int)(((byte)(93)))));
+            this.lblEVA2.Location = new System.Drawing.Point(71, 0);
+            this.lblEVA2.Name = "lblEVA2";
+            this.lblEVA2.Size = new System.Drawing.Size(779, 45);
+            this.lblEVA2.TabIndex = 2;
+            this.lblEVA2.Text = "DANIEL TORRREALBA EVALUACION 2";
+            this.lblEVA2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -373,6 +389,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Game";
             this.Text = "Golpea al topo";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Game_FormClosing);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -380,6 +397,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             this.tableLPInfo.ResumeLayout(false);
             this.tableLPInfo.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScores)).EndInit();
+            this.panelMarginB.ResumeLayout(false);
             this.panelMarginT.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -406,5 +424,6 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private System.Windows.Forms.Label lblShowDificultad;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.DataGridView dataGridViewScores;
+        private Label lblEVA2;
     }
 }

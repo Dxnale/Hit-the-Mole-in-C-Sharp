@@ -36,6 +36,7 @@
             this.nombreLabel = new System.Windows.Forms.Label();
             this.rutLabel = new System.Windows.Forms.Label();
             this.resultado = new System.Windows.Forms.Label();
+            this.lblEVA = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // textBoxNombre
@@ -120,12 +121,26 @@
             this.resultado.Text = "Ingrese RUT";
             this.resultado.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // lblEVA
+            // 
+            this.lblEVA.AutoSize = true;
+            this.lblEVA.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblEVA.Font = new System.Drawing.Font("DINPro-Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEVA.ForeColor = System.Drawing.SystemColors.ControlLight;
+            this.lblEVA.Location = new System.Drawing.Point(0, 358);
+            this.lblEVA.Name = "lblEVA";
+            this.lblEVA.Size = new System.Drawing.Size(165, 26);
+            this.lblEVA.TabIndex = 15;
+            this.lblEVA.Text = "Daniel Torrealba";
+            this.lblEVA.TextAlign = System.Drawing.ContentAlignment.BottomRight;
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.ClientSize = new System.Drawing.Size(435, 384);
+            this.Controls.Add(this.lblEVA);
             this.Controls.Add(this.resultado);
             this.Controls.Add(this.rutLabel);
             this.Controls.Add(this.nombreLabel);
@@ -154,6 +169,7 @@
         private System.Windows.Forms.Label nombreLabel;
         private System.Windows.Forms.Label rutLabel;
         private System.Windows.Forms.Label resultado;
+        private System.Windows.Forms.Label lblEVA;
     }
 }
 

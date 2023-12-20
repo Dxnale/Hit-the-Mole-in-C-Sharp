@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -9,6 +10,8 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 {
     public partial class Game : Form
     {
+        //Lista de logs
+        private List<CLASEEVALUA2danielTorrealba> LISTAEVALUA2 = new List<CLASEEVALUA2danielTorrealba>();
 
         private TablaPuntos tablaPuntos = new TablaPuntos();
         private readonly Topo[,] topos = new Topo[3, 3];
@@ -16,6 +19,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private readonly Random rnd = new Random();
 
         private readonly string player;
+        private readonly string playerRut;
         private int score = 0;
         private int fails = 0;
 
@@ -28,60 +32,65 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private const int Hard = 250;
         private int dificultadActual;
 
-        public Game(string player)
-        {
-            InitializeComponent();
+        public Game(string player, object logs, string playerRut)
+        { 
+            //Asigna la lista de logs recibida desde el login a la lista de logs de la clase Game
+            this.LISTAEVALUA2 = (List<CLASEEVALUA2danielTorrealba>)logs;
 
-            this.player = player;
-            lblNombre.Text = player;
+            InitializeComponent(); // Inicializa los componentes base del formulario
+
+            this.player = player; // Recibe el nombre del jugador desde el login
+            this.playerRut = playerRut; // Recibe el rut del jugador desde el login
+            lblNombre.Text = player; // Muestra el nombre del jugador en el formulario
             lblShowDificultad.Text = "REGALADO";
-            btnReset.Visible = false;
+            btnReset.Visible = false; // Oculta el botón de reinicio (el boton se usa al final)
 
-            MostrarScores();
-            
-            StartGame();
+            MostrarScores(); // Muestra los scores desde la clase TablaPuntos en el DataGridView       
+            StartGame(); // Inicia el juego
 
         }
         private void StartGame()
         {
-            StartTimers();
+            StartTimers(); // Inicia los timers de aparición y desaparición de los topos
 
             for (int i = 0; i < topos.GetLength(0); i++)
             {
                 for (int j = 0; j < topos.GetLength(1); j++)
                 {
-                    topos[i, j] = new Topo();
-                    CreaBoxes(i, j);
-                    panelJuego.Controls.Add(pictureBoxes[i, j], i, j);
+                    topos[i, j] = new Topo(); //Crea una matriz de objetos de de la clase Topo
+                    CreaBoxes(i, j); // Crea una matriz de PictureBoxes con propiedades por defecto
+                    panelJuego.Controls.Add(pictureBoxes[i, j], i, j); // Agrega los PictureBoxes al panel
                 }
             }
 
-            TimerDificultad(Baby);
+            TimerDificultad(Baby); // Inicia el timer de dificultad en Baby por defecto
         }
-        private void StartTimers()
+        private void StartTimers() 
         {
-            timerAparece?.Stop();
+            // Si los timers ya existen, los detiene y los destruye
+            timerAparece?.Stop(); 
             timerAparece?.Dispose();
             timerDesaparece?.Stop();
             timerDesaparece?.Dispose();
-
+            // Limpia el panel de juego
             panelJuego.Controls.Clear();
-
+            // Crea los timers
             timerAparece = new Timer();
             timerDesaparece = new Timer();
-
+            // Asigna los eventos a los timers
             timerAparece.Tick += TimerAparicion;
             timerDesaparece.Tick += TimerDesaparicion;
-
+            // se ejecutan los eventos de los timers
             timerAparece.Start();
             timerDesaparece.Start();
         }
         private void TimerAparicion(object sender, EventArgs e)
         {
+            // Genera dos números aleatorios entre 0 y 2 y los asigna a las variables x,y
             int x = rnd.Next(0, 3);
             int y = rnd.Next(0, 3);
 
-            if (!topos[x, y].Estado)
+            if (!topos[x, y].Estado) // Verifica el estado del topo en la posición x, y para manejar su posible aparición o desaparición
             {
                 topos[x, y].Aparicion();
                 ActualizarImagen(pictureBoxes[x, y], topos[x, y].Imagen);
@@ -93,14 +102,13 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 return;
             }
 
-
             if (dificultadActual <= Medium)
             {
                 AparicionAdicional(x, y);
             }
 
-            ActualizarDificultad();
-            MostrarScores();
+            ActualizarDificultad(); //Verifica si el score es suficiente para aumentar la dificultad
+            MostrarScores(); // Muestra los scores desde la clase TablaPuntos en el DataGridView
         }
         private void AparicionAdicional(int x, int y)
         {
@@ -159,7 +167,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             this.pictureBoxes[i, j].Click += TopoClick;
         }
         private void ActualizarImagen(PictureBox pictureBox, Bitmap imagen)
-        {
+        {   
             pictureBox.Invoke((MethodInvoker)delegate
             {
                 pictureBox.Image = imagen;
@@ -167,31 +175,37 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private async void TopoClick(object pictureBox, EventArgs evento)
         {
-            PictureBox pb = (PictureBox)pictureBox;
-
+            // Castea el objeto a PictureBox para poder acceder a sus propiedades
+            PictureBox pb = (PictureBox)pictureBox; 
+            // Obtiene los números de la propiedad Name del PictureBox para poder acceder a la matriz de topos
             int i = int.Parse(pb.Name[10].ToString());
             int j = int.Parse(pb.Name[11].ToString());
 
-            if (topos[i, j].Estado)
-            {
+            if (topos[i, j].Estado) //Utiliza el estado del topo para verificar si el click fue correcto o no
+            { // Si el click fue correcto, cambia la imagen del topo
                 ActualizarImagen(pictureBoxes[i, j], Properties.Resources.topo_UP);
-                score += 1000;
+                score += 1000; // Suma 1000 puntos al score
                 lblScorePuntos.Text = score.ToString();
+
+                LISTAEVALUA2.Add(new CLASEEVALUA2danielTorrealba(playerRut, $"Click Correcto en {i}-{j}")); // Agrega un log de click correcto 
             }
             else
-            {
+            { // Si el click fue incorrecto, cambia la imagen del topo
                 ActualizarImagen(pictureBoxes[i, j], Properties.Resources.topo_FAIL);
-                fails++;
+                fails++; // Suma 1 a los fails
                 lblScoreFallas.Text = fails.ToString();
+                // Actualiza el score y los fails en la tabla de scores
+
+                LISTAEVALUA2.Add(new CLASEEVALUA2danielTorrealba(playerRut, $"Click Incorrecto en {i}-{j}")); // Agrega un log de click incorrecto
 
                 ActualizarFails();
                 MostrarScores();
             }
 
-            await Task.Delay(dificultadActual);
+            await Task.Delay(dificultadActual);// Espera el tiempo establecido en la dificultad actual
 
-            topos[i, j].Desaparicion();
-            ActualizarImagen(pictureBoxes[i, j], topos[i, j].Imagen);
+            topos[i, j].Desaparicion(); // Desaparece el topo
+            ActualizarImagen(pictureBoxes[i, j], topos[i, j].Imagen); // Actualiza la imagen del topo
         }
         private void ActualizarScore()
         {
@@ -268,6 +282,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private void BtnReset_Click(object sender, EventArgs e)
         {
+            LISTAEVALUA2.Add(new CLASEEVALUA2danielTorrealba(playerRut, "Reinicio de Juego"));
             EndGame();
             StartGame();
         }
@@ -286,6 +301,23 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             btnReset.Visible = false;
 
             panelJuego.Controls.Clear();
+        }
+        private void Game_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+            //Cada elemento de la lista debe ser almacenado en el archivo de texto con el siguiente formato: Rut, InicioSesion, FinSesion, Accion, AccionF;
+            LISTAEVALUA2.Add(new CLASEEVALUA2danielTorrealba(playerRut,"Juego Cerrado", true));
+
+            StreamWriter archivo = new StreamWriter(@"C:\\TXTS\\VIGIADANIELTORREALBA.csv", true);
+
+            foreach (CLASEEVALUA2danielTorrealba log in LISTAEVALUA2)
+            {
+                archivo.WriteLine($"{log.Rut},{log.InicioSesion},{log.FinSesion},{log.Accion},{log.AccionF}");
+            }
+
+            archivo.Close();
+
+            EndGame();
         }
     }
 }
