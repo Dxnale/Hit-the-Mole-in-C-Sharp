@@ -50,9 +50,9 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             this.panelJuego = new System.Windows.Forms.TableLayoutPanel();
             this.panelMarginR = new System.Windows.Forms.Panel();
             this.panelMarginB = new System.Windows.Forms.Panel();
+            this.lblEVA2 = new System.Windows.Forms.Label();
             this.panelMarginT = new System.Windows.Forms.Panel();
             this.lblTitle = new System.Windows.Forms.Label();
-            this.lblEVA2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -341,6 +341,19 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             this.panelMarginB.Size = new System.Drawing.Size(850, 45);
             this.panelMarginB.TabIndex = 2;
             // 
+            // lblEVA2
+            // 
+            this.lblEVA2.BackColor = System.Drawing.Color.Transparent;
+            this.lblEVA2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.lblEVA2.Font = new System.Drawing.Font("Nunito Sans ExtraBold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblEVA2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(203)))), ((int)(((byte)(93)))));
+            this.lblEVA2.Location = new System.Drawing.Point(71, 0);
+            this.lblEVA2.Name = "lblEVA2";
+            this.lblEVA2.Size = new System.Drawing.Size(779, 45);
+            this.lblEVA2.TabIndex = 2;
+            this.lblEVA2.Text = "DANIEL TORRREALBA EVALUACION 3";
+            this.lblEVA2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // panelMarginT
             // 
             this.panelMarginT.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))), ((int)(((byte)(16)))));
@@ -363,19 +376,6 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             this.lblTitle.TabIndex = 1;
             this.lblTitle.Text = "GOLPEA AL TOPO";
             this.lblTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // lblEVA2
-            // 
-            this.lblEVA2.BackColor = System.Drawing.Color.Transparent;
-            this.lblEVA2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.lblEVA2.Font = new System.Drawing.Font("Nunito Sans ExtraBold", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEVA2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(249)))), ((int)(((byte)(203)))), ((int)(((byte)(93)))));
-            this.lblEVA2.Location = new System.Drawing.Point(71, 0);
-            this.lblEVA2.Name = "lblEVA2";
-            this.lblEVA2.Size = new System.Drawing.Size(779, 45);
-            this.lblEVA2.TabIndex = 2;
-            this.lblEVA2.Text = "DANIEL TORRREALBA EVALUACION 2";
-            this.lblEVA2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // Game
             // 

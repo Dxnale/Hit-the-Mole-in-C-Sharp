@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -7,19 +9,27 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 {
     public partial class Login : Form
     {
-        //sapo
         private List<CLASEEVALUA2danielTorrealba> logins = new List<CLASEEVALUA2danielTorrealba>();
 
         private static bool valido;
         private static string digito;
-        private static readonly int[] digitosAlgoritmo = { 3, 2, 7, 6, 5, 4, 3, 2 }; //array de digitos constantes para el algoritmo
+
+        //array de digitos constantes para el algoritmo
+        private static readonly int[] digitosAlgoritmo = { 3, 2, 7, 6, 5, 4, 3, 2 };
+
+        private DataTable dataTable;
+
+
+        private readonly string conectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\GIT\\PROG2EVA1javierNievesDanielTorrealba\\p2bdd.mdf;Integrated Security=True";
+
+        private static readonly string tableName = "danielTorrealba_PERFILES";
+
         public Login()
         {
             InitializeComponent();
         }
         private static bool ValidarRut(string Rut)
         {
-
             digito = null; //Resetea el digito verificador
 
             Rut = Rut.Replace(".", "").Replace("-", "").ToUpper(); //quita puntos y guiones y pasa a mayusculas si el rut es menor a 9 digitos agrega un 0 al inicio
@@ -49,6 +59,52 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private void btnEnter_Click(object sender, EventArgs e)
         {
+            if (!TableExists(tableName))
+            {
+                MessageBox.Show("Aún no hay una tabla en tu base de datos.");
+                return;
+            }
+
+            if (!valido || !ValidarRut(textBoxRut.Text) || textBoxNombre.Text == "" || textBoxPass.Text == "")
+            {
+                MessageBox.Show("Debes ingresar un nombre, RUT y contraseña validos para poder jugar");
+                logins.Add(new CLASEEVALUA2danielTorrealba(textBoxRut.Text, "Login Fallido"));
+                return;
+            }
+
+            string rutIngresado = textBoxRut.Text.Replace(".", "").Replace("-", "").ToUpper();
+            string passIngresado = textBoxPass.Text.ToUpper();
+
+            SqlConnection conexion = new SqlConnection(conectionString);
+            conexion.Open();
+            dataTable = GetDataTable($"select * from {tableName};", conexion);
+            conexion.Close();
+
+            if (dataTable.Rows.Count > 0)
+            {
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    string rutBD = row[0].ToString();
+                    string passBD = row[5].ToString();
+                    int nivelBD = int.Parse(row[6].ToString());
+
+                    if (rutBD == rutIngresado && passBD == passIngresado)
+                    {
+                        if (nivelBD == 2)
+                        {
+                            logins.Add(new CLASEEVALUA2danielTorrealba(textBoxRut.Text, "Login Exitoso"));
+                            RunGame();
+                        }
+                        else if (nivelBD == 1)
+                        {
+                            MessageBox.Show("Bienvenido administrador.");
+                        }
+                    }
+                }
+            }
+
+
+            /*
             if (valido && ValidarRut(textBoxRut.Text) && textBoxNombre.Text != "")
             {
                 logins.Add(new CLASEEVALUA2danielTorrealba(textBoxRut.Text));
@@ -61,10 +117,11 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
                 MessageBox.Show("Debes ingresar un nombre y RUT validos para poder jugar");
             }
+            */
         }
         private void RunGame()
         {
-            Game game = new Game(textBoxNombre.Text.ToUpper(),logins, textBoxRut.Text.ToUpper());
+            Game game = new Game(textBoxNombre.Text.ToUpper(), logins, textBoxRut.Text.ToUpper());
 
             game.Show();
             this.Hide();
@@ -90,10 +147,12 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         {
             string rut = textBoxRut.Text.Trim();
             rut = rut.Replace(".", "").Replace("-", "").ToUpper();
-            valido = Regex.IsMatch(rut, @"^\d{1,10}[kK]?$"); //valida que el rut tenga solo numeros y una k al final (anti-copypaste)
+            //valida que el rut tenga solo numeros y una k al final (anti-copypaste)
+            valido = Regex.IsMatch(rut, @"^\d{1,10}[kK]?$");
 
             resultado.ForeColor = System.Drawing.Color.White;
             resultado.Text = "Ingrese RUT";
+
             if (valido && ValidarRut(rut))
             {
                 resultado.ForeColor = System.Drawing.Color.SpringGreen;
@@ -105,5 +164,66 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 resultado.Text = ($" DV: {digito}");
             }
         }
+        private DataTable GetDataTable(string consulta, SqlConnection conexion)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter(consulta, conexion);
+            dataTable = new DataTable();
+            adapter.Fill(dataTable);
+            return dataTable;
+        }
+        private void btnCreateTable_Click(object sender, EventArgs e)
+        {
+            if (!TableExists(tableName))
+            {
+                CreateTable();
+                MessageBox.Show("La tabla se ha creado correctamente.");
+            }
+            else
+            {
+                MessageBox.Show("La tabla ya existe en la base de datos.");
+            }
+        }
+        private bool TableExists(string tableName)
+        {
+            using (SqlConnection connection = new SqlConnection(conectionString))
+            {
+                connection.Open();
+
+                string consulta = $"select * from INFORMATION_SCHEMA.TABLES;";
+
+                dataTable = GetDataTable(consulta, connection);
+
+                if (dataTable.Rows.Count > 0)
+                {
+                    foreach (DataRow row in dataTable.Rows)
+                    {
+                        if (row[2].ToString() == tableName)
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            }
+        }
+        private void CreateTable()
+        {
+            using (SqlConnection conexion = new SqlConnection(conectionString))
+            {
+                string consultaCreate = $"create table {tableName} (rut nvarchar(10) not null primary key,nombre nvarchar(30) not null, apPat nvarchar(30) not null, apMat nvarchar(30) not null, edad int not null, clave nvarchar(13) not null, Nivel int not null);";
+
+                string insertInit = $"insert into {tableName} (rut, nombre, apPat, apMat, edad, clave, Nivel) values ('111111111', 'LUIS', 'YAÑEZ', 'CARREÑO', 49, 'LYC11111111-1', 1);";
+
+                conexion.Open();
+                dataTable = GetDataTable(consultaCreate, conexion);
+                conexion.Close();
+
+                conexion.Open();
+                dataTable = GetDataTable(insertInit, conexion);
+                conexion.Close();
+            }
+        }
+
     }
 }
