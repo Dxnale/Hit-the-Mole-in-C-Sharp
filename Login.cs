@@ -28,7 +28,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         {
             InitializeComponent();
         }
-        private static bool ValidarRut(string Rut)
+        public static bool ValidarRut(string Rut)
         {
             digito = null; //Resetea el digito verificador
 
@@ -43,7 +43,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             return Rut[Rut.Length - 1].ToString().Equals(digito);
 
         }
-        private static string ValidarDigito(string Rut)
+        public static string ValidarDigito(string Rut)
         {
             int suma = 0;
 
@@ -79,50 +79,52 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             conexion.Open();
             dataTable = GetDataTable($"select * from {tableName};", conexion);
             conexion.Close();
+            bool rutEncontrado = false;
 
-            if (dataTable.Rows.Count > 0)
+            foreach (DataRow row in dataTable.Rows)
             {
-                foreach (DataRow row in dataTable.Rows)
-                {
-                    string rutBD = row[0].ToString();
-                    string passBD = row[5].ToString();
-                    int nivelBD = int.Parse(row[6].ToString());
+                string rutBD = row[0].ToString();
+                string passBD = row[5].ToString();
+                int nivelBD = int.Parse(row[6].ToString());
 
-                    if (rutBD == rutIngresado && passBD == passIngresado)
+                if (rutBD == rutIngresado && passBD == passIngresado)
+                {
+                    if (nivelBD == 2)
                     {
-                        if (nivelBD == 2)
-                        {
-                            logins.Add(new CLASEEVALUA2danielTorrealba(textBoxRut.Text, "Login Exitoso"));
-                            RunGame();
-                        }
-                        else if (nivelBD == 1)
-                        {
-                            MessageBox.Show("Bienvenido administrador.");
-                        }
+                        rutEncontrado = true;
+                        logins.Add(new CLASEEVALUA2danielTorrealba(textBoxRut.Text, "Login Exitoso"));
+                        RunGame();
                     }
+                    else if (nivelBD == 1)
+                    {
+                        rutEncontrado = true;
+                        RunPanel();
+                        MessageBox.Show("Bienvenido administrador.");
+                    }
+                }
+                else if (rutBD == rutIngresado && passBD != passIngresado)
+                {
+                    rutEncontrado = true;
+                    MessageBox.Show("Contraseña incorrecta.");
+                    logins.Add(new CLASEEVALUA2danielTorrealba(textBoxRut.Text, "Login Fallido"));
                 }
             }
 
-
-            /*
-            if (valido && ValidarRut(textBoxRut.Text) && textBoxNombre.Text != "")
+            if (!rutEncontrado)
             {
-                logins.Add(new CLASEEVALUA2danielTorrealba(textBoxRut.Text));
-
-                RunGame();
-            }
-            else
-            {
+                MessageBox.Show("RUT no registrado.");
                 logins.Add(new CLASEEVALUA2danielTorrealba(textBoxRut.Text, "Login Fallido"));
-
-                MessageBox.Show("Debes ingresar un nombre y RUT validos para poder jugar");
             }
-            */
+        }
+        private void RunPanel()
+        {
+            PanelAdmin panel = new PanelAdmin();
+            panel.Show();
+            this.Hide();
         }
         private void RunGame()
         {
             Game game = new Game(textBoxNombre.Text.ToUpper(), logins, textBoxRut.Text.ToUpper());
-
             game.Show();
             this.Hide();
         }
@@ -185,27 +187,25 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private bool TableExists(string tableName)
         {
-            using (SqlConnection connection = new SqlConnection(conectionString))
+            SqlConnection connection = new SqlConnection(conectionString);
+            connection.Open();
+            string consulta = $"select * from INFORMATION_SCHEMA.TABLES;";
+            dataTable = GetDataTable(consulta, connection);
+            connection.Close();
+
+            if (dataTable.Rows.Count > 0)
             {
-                connection.Open();
-
-                string consulta = $"select * from INFORMATION_SCHEMA.TABLES;";
-
-                dataTable = GetDataTable(consulta, connection);
-
-                if (dataTable.Rows.Count > 0)
+                foreach (DataRow row in dataTable.Rows)
                 {
-                    foreach (DataRow row in dataTable.Rows)
+                    if (row[2].ToString() == tableName)
                     {
-                        if (row[2].ToString() == tableName)
-                        {
-                            return true;
-                        }
+                        return true;
                     }
                 }
-
-                return false;
             }
+
+            return false;
+
         }
         private void CreateTable()
         {
@@ -224,6 +224,12 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 conexion.Close();
             }
         }
-
+        private void textBoxPass_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == Convert.ToChar(Keys.Enter))
+            {
+                btnEnter_Click(sender, e);
+            }
+        }
     }
 }
