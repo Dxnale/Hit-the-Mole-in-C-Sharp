@@ -28,6 +28,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
 
 
+
         private DataTable GetDataTable(string consulta, SqlConnection conexion)
         {
             SqlDataAdapter adapter = new SqlDataAdapter(consulta, conexion);
@@ -136,26 +137,8 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
             return true;
         }
-
-
-        private void PanelAdmin_Load(object sender, EventArgs e)
+        private string rutExiste(string rut)
         {
-            string consulta = $"SELECT * FROM {tableName}";
-            SqlConnection conexion = new SqlConnection(conectionString);
-            conexion.Open();
-            dataTable = GetDataTable(consulta, conexion);
-            conexion.Close();
-            dgvAdmin.DataSource = dataTable;
-
-        }
-
-        //AUN NO VALIDA EXISTENCIA DE RUT EN LA BASE DE DATOS
-        private void btnEliminar_Click(object sender, EventArgs e)
-        {
-            string rut = ValidadorRUT(textBoxRutEliminar.Text);
-
-            if (rut == null) return;
-
             string consulta = $"select * from {tableName} where rut = '{rut}'";
             SqlConnection conexion = new SqlConnection(conectionString);
             conexion.Open();
@@ -169,14 +152,36 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 if (row[0].ToString() == rut) existe = true;
             }
 
-            if (!existe)
+            if (!existe) return null;
+
+            return rut;
+        }
+
+
+
+        private void PanelAdmin_Load(object sender, EventArgs e)
+        {
+            string consulta = $"SELECT * FROM {tableName}";
+            SqlConnection conexion = new SqlConnection(conectionString);
+            conexion.Open();
+            dataTable = GetDataTable(consulta, conexion);
+            conexion.Close();
+            dgvAdmin.DataSource = dataTable;
+        }
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            string rut = ValidadorRUT(textBoxRutEliminar.Text);
+
+            if (rut == null) return;
+
+            if (rutExiste(rut) == null)
             {
-                MessageBox.Show("El rut ingresado no existe");
+                MessageBox.Show("El rut ingresado no se ha encontrado");
                 return;
             }
 
-            consulta = $"delete from {tableName} where rut = '{rut}'";
-            conexion = new SqlConnection(conectionString);
+            string consulta = $"delete from {tableName} where rut = '{rut}'";
+            SqlConnection conexion = new SqlConnection(conectionString);
             conexion.Open();
             dataTable = GetDataTable(consulta, conexion);
             conexion.Close();
@@ -193,24 +198,17 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
             if (rut == null) return;
 
+            if (rutExiste(rut) == null)
+            {
+                MessageBox.Show("El rut ingresado no se ha encontrado");
+                return;
+            }
+
             string consulta = $"select * from {tableName} where rut = '{rut}'";
             SqlConnection conexion = new SqlConnection(conectionString);
             conexion.Open();
             dataTable = GetDataTable(consulta, conexion);
             conexion.Close();
-
-            bool existe = false;
-
-            foreach (DataRow row in dataTable.Rows)
-            {
-                if (row[0].ToString() == rut) existe = true;
-            }
-
-            if (!existe)
-            {
-                MessageBox.Show("El rut ingresado no existe");
-                return;
-            }
 
             dgvAdmin.DataSource = dataTable;
 
@@ -226,8 +224,18 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private void btnInsert_Click(object sender, EventArgs e)
         {
             string rut = ValidadorRUT(textBoxRutAdd.Text);
+
             if (rut == null) return;
+
             if (!ValidarCampos()) return;
+
+            string rutYaExiste = rutExiste(rut);
+
+            if (rut == rutYaExiste)
+            {
+                MessageBox.Show("El rut ingresado ya existe");
+                return;
+            }
 
             string nombre = textBoxNombreAdd.Text;
             string apPat = textBoxApPatAdd.Text;
@@ -236,28 +244,9 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             string nivel = textBoxNivelAdd.Text;
             string clave = GenerarClave(nombre, apPat, apMat, rut);
 
-            string consulta = $"select * from {tableName} where rut = '{rut}'";
+            string consulta = $"insert into {tableName} (rut, nombre, apPat, apMat, edad, clave, Nivel) values ('{rut}', '{nombre}', '{apPat}', '{apMat}', {edad}, '{clave}', {nivel});";
+
             SqlConnection conexion = new SqlConnection(conectionString);
-            conexion.Open();
-            dataTable = GetDataTable(consulta, conexion);
-            conexion.Close();
-
-            bool existe = false;
-
-            foreach (DataRow row in dataTable.Rows)
-            {
-                if (row[0].ToString() == rut) existe = true;
-            }
-
-            if (existe)
-            {
-                MessageBox.Show("El rut ingresado ya existe");
-                return;
-            }
-
-            consulta = $"insert into {tableName} (rut, nombre, apPat, apMat, edad, clave, Nivel) values ('{rut}', '{nombre}', '{apPat}', '{apMat}', {edad}, '{clave}', {nivel});";
-
-            conexion = new SqlConnection(conectionString);
             conexion.Open();
             dataTable = GetDataTable(consulta, conexion);
             conexion.Close();
@@ -270,8 +259,16 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private void btnModificar_Click(object sender, EventArgs e)
         {
             string rut = ValidadorRUT(textBoxRutAdd.Text);
+
             if (rut == null) return;
+
             if (!ValidarCampos()) return;
+
+            if (rutExiste(rut) == null)
+            {
+                MessageBox.Show("El rut ingresado no se ha encontrado");
+                return;
+            }
 
             string nombre = textBoxNombreAdd.Text;
             string apPat = textBoxApPatAdd.Text;
@@ -303,19 +300,21 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             textBoxRutConsultar.Text = "";
             PanelAdmin_Load(sender, e);
         }
-
         private void btnBack_Click(object sender, EventArgs e)
         {
             Login login = new Login();
             login.Show();
-            this.Close();
+            this.Hide();
         }
-
         private void btnJugar_Click(object sender, EventArgs e)
         {
             Game game = new Game(username.ToUpper(), logins, userRut.ToUpper());
             game.Show();
             this.Hide();
+        }
+        private void PanelAdmin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -318,6 +318,8 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             archivo.Close();
 
             EndGame();
+
+            Application.Exit();
         }
     }
 }

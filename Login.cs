@@ -28,6 +28,9 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         {
             InitializeComponent();
         }
+
+
+
         public static bool ValidarRut(string Rut)
         {
             digito = null; //Resetea el digito verificador
@@ -57,6 +60,67 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
             return resultado == 10 ? "K" : resultado == 11 ? "0" : resultado.ToString(); //si el resultado es 10 retorna K, si es 11 retorna 0, si no simplemente retorna el digito resultante
         }
+        private DataTable GetDataTable(string consulta, SqlConnection conexion)
+        {
+            SqlDataAdapter adapter = new SqlDataAdapter(consulta, conexion);
+            dataTable = new DataTable();
+            adapter.Fill(dataTable);
+            return dataTable;
+        }
+        private void CreateTable()
+        {
+            using (SqlConnection conexion = new SqlConnection(conectionString))
+            {
+                string consultaCreate = $"create table {tableName} (rut nvarchar(10) not null primary key,nombre nvarchar(30) not null, apPat nvarchar(30) not null, apMat nvarchar(30) not null, edad int not null, clave nvarchar(13) not null, Nivel int not null);";
+
+                string insertInit = $"insert into {tableName} (rut, nombre, apPat, apMat, edad, clave, Nivel) values ('111111111', 'LUIS', 'YAÑEZ', 'CARREÑO', 49, 'LYC11111111-1', 1);";
+
+                conexion.Open();
+                dataTable = GetDataTable(consultaCreate, conexion);
+                conexion.Close();
+
+                conexion.Open();
+                dataTable = GetDataTable(insertInit, conexion);
+                conexion.Close();
+            }
+        }
+        private void RunPanel()
+        {
+            PanelAdmin panel = new PanelAdmin(textBoxNombre.Text.ToUpper(), logins, textBoxRut.Text.ToUpper());
+            panel.Show();
+            this.Hide();
+        }
+        public void RunGame()
+        {
+            Game game = new Game(textBoxNombre.Text.ToUpper(), logins, textBoxRut.Text.ToUpper());
+            game.Show();
+            this.Hide();
+        }
+        private bool TableExists(string tableName)
+        {
+            SqlConnection connection = new SqlConnection(conectionString);
+            connection.Open();
+            string consulta = $"select * from INFORMATION_SCHEMA.TABLES;";
+            dataTable = GetDataTable(consulta, connection);
+            connection.Close();
+
+            if (dataTable.Rows.Count > 0)
+            {
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    if (row[2].ToString() == tableName)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+
+        }
+
+
+
         private void btnEnter_Click(object sender, EventArgs e)
         {
             if (!TableExists(tableName))
@@ -92,7 +156,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                     if (nivelBD == 2)
                     {
                         rutEncontrado = true;
-                        logins.Add(new CLASEEVALUA2danielTorrealba(textBoxRut.Text, "Login Exitoso"));
+                        logins.Add(new CLASEEVALUA2danielTorrealba(rutIngresado));
                         RunGame();
                     }
                     else if (nivelBD == 1)
@@ -106,7 +170,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 {
                     rutEncontrado = true;
                     MessageBox.Show("Contraseña incorrecta.");
-                    logins.Add(new CLASEEVALUA2danielTorrealba(textBoxRut.Text, "Login Fallido"));
+                    logins.Add(new CLASEEVALUA2danielTorrealba(rutIngresado, "Login Fallido"));
                 }
             }
 
@@ -116,21 +180,41 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 logins.Add(new CLASEEVALUA2danielTorrealba(textBoxRut.Text, "Login Fallido"));
             }
         }
-        private void RunPanel()
+        private void btnCreateTable_Click(object sender, EventArgs e)
         {
-            PanelAdmin panel = new PanelAdmin(textBoxNombre.Text.ToUpper(),logins, textBoxRut.Text.ToUpper());
-            panel.Show();
-            this.Hide();
+            if (!TableExists(tableName))
+            {
+                CreateTable();
+                MessageBox.Show("La tabla se ha creado correctamente.");
+            }
+            else
+            {
+                MessageBox.Show("La tabla ya existe en la base de datos.");
+            }
         }
-        public void RunGame()
+        private void textBoxRut_TextChanged(object sender, EventArgs e)
         {
-            Game game = new Game(textBoxNombre.Text.ToUpper(), logins, textBoxRut.Text.ToUpper());
-            game.Show();
-            this.Hide();
+            string rut = textBoxRut.Text.Trim();
+            rut = rut.Replace(".", "").Replace("-", "").ToUpper();
+            valido = Regex.IsMatch(rut, @"^\d{1,10}[kK]?$");
+
+            resultado.ForeColor = System.Drawing.Color.White;
+            resultado.Text = "Ingrese RUT";
+
+
+            if (valido && ValidarRut(rut))
+            {
+                resultado.ForeColor = System.Drawing.Color.SpringGreen;
+                resultado.Text = "VALIDO";
+            }
+            else if (digito != null && textBoxRut.Text.Length > 7)
+            {
+                resultado.ForeColor = System.Drawing.Color.White;
+                resultado.Text = ($" DV: {digito}");
+            }
         }
         private void textBoxRut_KeyPress(object sender, KeyPressEventArgs e)
         {
-            //Valida que la tecla ingresada sea un numero, o una k o una K o un "-" o una tecla de control (ej: borrar)
             if (Char.IsDigit(e.KeyChar) || e.KeyChar == 'k' || e.KeyChar == 'K' || e.KeyChar == '-' || Char.IsControl(e.KeyChar))
             {
                 e.Handled = false;
@@ -145,91 +229,13 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 btnEnter_Click(sender, e);
             }
         }
-        private void textBoxRut_TextChanged(object sender, EventArgs e)
-        {
-            string rut = textBoxRut.Text.Trim();
-            rut = rut.Replace(".", "").Replace("-", "").ToUpper();
-            //valida que el rut tenga solo numeros y una k al final (anti-copypaste)
-            valido = Regex.IsMatch(rut, @"^\d{1,10}[kK]?$");
-
-            resultado.ForeColor = System.Drawing.Color.White;
-            resultado.Text = "Ingrese RUT";
-
-            if (valido && ValidarRut(rut))
-            {
-                resultado.ForeColor = System.Drawing.Color.SpringGreen;
-                resultado.Text = "VALIDO";
-            }
-            else if (digito != null && textBoxRut.Text.Length > 7)
-            {
-                resultado.ForeColor = System.Drawing.Color.White;
-                resultado.Text = ($" DV: {digito}");
-            }
-        }
-        private DataTable GetDataTable(string consulta, SqlConnection conexion)
-        {
-            SqlDataAdapter adapter = new SqlDataAdapter(consulta, conexion);
-            dataTable = new DataTable();
-            adapter.Fill(dataTable);
-            return dataTable;
-        }
-        private void btnCreateTable_Click(object sender, EventArgs e)
-        {
-            if (!TableExists(tableName))
-            {
-                CreateTable();
-                MessageBox.Show("La tabla se ha creado correctamente.");
-            }
-            else
-            {
-                MessageBox.Show("La tabla ya existe en la base de datos.");
-            }
-        }
-        private bool TableExists(string tableName)
-        {
-            SqlConnection connection = new SqlConnection(conectionString);
-            connection.Open();
-            string consulta = $"select * from INFORMATION_SCHEMA.TABLES;";
-            dataTable = GetDataTable(consulta, connection);
-            connection.Close();
-
-            if (dataTable.Rows.Count > 0)
-            {
-                foreach (DataRow row in dataTable.Rows)
-                {
-                    if (row[2].ToString() == tableName)
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            return false;
-
-        }
-        private void CreateTable()
-        {
-            using (SqlConnection conexion = new SqlConnection(conectionString))
-            {
-                string consultaCreate = $"create table {tableName} (rut nvarchar(10) not null primary key,nombre nvarchar(30) not null, apPat nvarchar(30) not null, apMat nvarchar(30) not null, edad int not null, clave nvarchar(13) not null, Nivel int not null);";
-
-                string insertInit = $"insert into {tableName} (rut, nombre, apPat, apMat, edad, clave, Nivel) values ('111111111', 'LUIS', 'YAÑEZ', 'CARREÑO', 49, 'LYC11111111-1', 1);";
-
-                conexion.Open();
-                dataTable = GetDataTable(consultaCreate, conexion);
-                conexion.Close();
-
-                conexion.Open();
-                dataTable = GetDataTable(insertInit, conexion);
-                conexion.Close();
-            }
-        }
         private void textBoxPass_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == Convert.ToChar(Keys.Enter))
-            {
-                btnEnter_Click(sender, e);
-            }
+            if (e.KeyChar == Convert.ToChar(Keys.Enter)) btnEnter_Click(sender, e);
+        }
+        private void Login_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
         }
     }
 }
