@@ -54,6 +54,7 @@
             this.dgvAdmin = new System.Windows.Forms.DataGridView();
             this.btnReset = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
+            this.btnJugar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -65,7 +66,7 @@
             // 
             this.rutLabel.AutoSize = true;
             this.rutLabel.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.rutLabel.Location = new System.Drawing.Point(37, 429);
+            this.rutLabel.Location = new System.Drawing.Point(37, 430);
             this.rutLabel.Name = "rutLabel";
             this.rutLabel.Size = new System.Drawing.Size(36, 16);
             this.rutLabel.TabIndex = 8;
@@ -111,7 +112,8 @@
             this.textBoxRutAdd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxRutAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxRutAdd.ForeColor = System.Drawing.SystemColors.Menu;
-            this.textBoxRutAdd.Location = new System.Drawing.Point(30, 441);
+            this.textBoxRutAdd.Location = new System.Drawing.Point(29, 441);
+            this.textBoxRutAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxRutAdd.Name = "textBoxRutAdd";
             this.textBoxRutAdd.Size = new System.Drawing.Size(255, 30);
             this.textBoxRutAdd.TabIndex = 5;
@@ -133,7 +135,8 @@
             this.textBoxApPatAdd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxApPatAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxApPatAdd.ForeColor = System.Drawing.SystemColors.Menu;
-            this.textBoxApPatAdd.Location = new System.Drawing.Point(30, 489);
+            this.textBoxApPatAdd.Location = new System.Drawing.Point(29, 489);
+            this.textBoxApPatAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxApPatAdd.Name = "textBoxApPatAdd";
             this.textBoxApPatAdd.Size = new System.Drawing.Size(255, 30);
             this.textBoxApPatAdd.TabIndex = 6;
@@ -144,7 +147,8 @@
             this.textBoxNombreAdd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxNombreAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxNombreAdd.ForeColor = System.Drawing.SystemColors.Menu;
-            this.textBoxNombreAdd.Location = new System.Drawing.Point(30, 395);
+            this.textBoxNombreAdd.Location = new System.Drawing.Point(29, 395);
+            this.textBoxNombreAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxNombreAdd.Name = "textBoxNombreAdd";
             this.textBoxNombreAdd.Size = new System.Drawing.Size(255, 30);
             this.textBoxNombreAdd.TabIndex = 4;
@@ -153,6 +157,7 @@
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -183,7 +188,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dgvAdmin);
             this.splitContainer1.Size = new System.Drawing.Size(1184, 747);
-            this.splitContainer1.SplitterDistance = 311;
+            this.splitContainer1.SplitterDistance = 310;
             this.splitContainer1.TabIndex = 0;
             // 
             // rutEliminarLabel
@@ -230,7 +235,7 @@
             // 
             this.apMatLabel.AutoSize = true;
             this.apMatLabel.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.apMatLabel.Location = new System.Drawing.Point(37, 525);
+            this.apMatLabel.Location = new System.Drawing.Point(37, 526);
             this.apMatLabel.Name = "apMatLabel";
             this.apMatLabel.Size = new System.Drawing.Size(83, 16);
             this.apMatLabel.TabIndex = 9;
@@ -239,7 +244,8 @@
             // btnEliminar
             // 
             this.btnEliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnEliminar.Location = new System.Drawing.Point(30, 176);
+            this.btnEliminar.Location = new System.Drawing.Point(29, 176);
+            this.btnEliminar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(255, 41);
             this.btnEliminar.TabIndex = 1;
@@ -250,7 +256,8 @@
             // btnConsultar
             // 
             this.btnConsultar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnConsultar.Location = new System.Drawing.Point(30, 304);
+            this.btnConsultar.Location = new System.Drawing.Point(29, 304);
+            this.btnConsultar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnConsultar.Name = "btnConsultar";
             this.btnConsultar.Size = new System.Drawing.Size(255, 41);
             this.btnConsultar.TabIndex = 3;
@@ -261,7 +268,8 @@
             // btnModificar
             // 
             this.btnModificar.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnModificar.Location = new System.Drawing.Point(161, 669);
+            this.btnModificar.Location = new System.Drawing.Point(161, 670);
+            this.btnModificar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(125, 41);
             this.btnModificar.TabIndex = 11;
@@ -272,7 +280,8 @@
             // btnInsert
             // 
             this.btnInsert.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnInsert.Location = new System.Drawing.Point(30, 669);
+            this.btnInsert.Location = new System.Drawing.Point(29, 670);
+            this.btnInsert.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.Size = new System.Drawing.Size(125, 41);
             this.btnInsert.TabIndex = 10;
@@ -286,7 +295,8 @@
             this.textBoxRutEliminar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxRutEliminar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxRutEliminar.ForeColor = System.Drawing.SystemColors.Menu;
-            this.textBoxRutEliminar.Location = new System.Drawing.Point(30, 135);
+            this.textBoxRutEliminar.Location = new System.Drawing.Point(29, 135);
+            this.textBoxRutEliminar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxRutEliminar.Name = "textBoxRutEliminar";
             this.textBoxRutEliminar.Size = new System.Drawing.Size(255, 30);
             this.textBoxRutEliminar.TabIndex = 0;
@@ -297,7 +307,8 @@
             this.textBoxRutConsultar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxRutConsultar.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxRutConsultar.ForeColor = System.Drawing.SystemColors.Menu;
-            this.textBoxRutConsultar.Location = new System.Drawing.Point(30, 263);
+            this.textBoxRutConsultar.Location = new System.Drawing.Point(29, 263);
+            this.textBoxRutConsultar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxRutConsultar.Name = "textBoxRutConsultar";
             this.textBoxRutConsultar.Size = new System.Drawing.Size(255, 30);
             this.textBoxRutConsultar.TabIndex = 2;
@@ -308,7 +319,8 @@
             this.textBoxNivelAdd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxNivelAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxNivelAdd.ForeColor = System.Drawing.SystemColors.Menu;
-            this.textBoxNivelAdd.Location = new System.Drawing.Point(30, 624);
+            this.textBoxNivelAdd.Location = new System.Drawing.Point(29, 624);
+            this.textBoxNivelAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxNivelAdd.Name = "textBoxNivelAdd";
             this.textBoxNivelAdd.Size = new System.Drawing.Size(255, 30);
             this.textBoxNivelAdd.TabIndex = 9;
@@ -319,7 +331,8 @@
             this.textBoxEdadAdd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxEdadAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxEdadAdd.ForeColor = System.Drawing.SystemColors.Menu;
-            this.textBoxEdadAdd.Location = new System.Drawing.Point(30, 582);
+            this.textBoxEdadAdd.Location = new System.Drawing.Point(29, 582);
+            this.textBoxEdadAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxEdadAdd.Name = "textBoxEdadAdd";
             this.textBoxEdadAdd.Size = new System.Drawing.Size(255, 30);
             this.textBoxEdadAdd.TabIndex = 8;
@@ -330,7 +343,8 @@
             this.textBoxApMatAdd.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxApMatAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxApMatAdd.ForeColor = System.Drawing.SystemColors.Menu;
-            this.textBoxApMatAdd.Location = new System.Drawing.Point(30, 536);
+            this.textBoxApMatAdd.Location = new System.Drawing.Point(29, 537);
+            this.textBoxApMatAdd.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBoxApMatAdd.Name = "textBoxApMatAdd";
             this.textBoxApMatAdd.Size = new System.Drawing.Size(255, 30);
             this.textBoxApMatAdd.TabIndex = 7;
@@ -347,6 +361,7 @@
             this.dgvAdmin.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvAdmin.EnableHeadersVisualStyles = false;
             this.dgvAdmin.Location = new System.Drawing.Point(0, 0);
+            this.dgvAdmin.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgvAdmin.Name = "dgvAdmin";
             this.dgvAdmin.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
             this.dgvAdmin.RowHeadersVisible = false;
@@ -357,15 +372,16 @@
             this.dgvAdmin.ShowCellToolTips = false;
             this.dgvAdmin.ShowEditingIcon = false;
             this.dgvAdmin.ShowRowErrors = false;
-            this.dgvAdmin.Size = new System.Drawing.Size(869, 747);
+            this.dgvAdmin.Size = new System.Drawing.Size(870, 747);
             this.dgvAdmin.TabIndex = 0;
             // 
             // btnReset
             // 
             this.btnReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnReset.Location = new System.Drawing.Point(1098, 751);
+            this.btnReset.Location = new System.Drawing.Point(1099, 751);
+            this.btnReset.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(82, 20);
+            this.btnReset.Size = new System.Drawing.Size(83, 20);
             this.btnReset.TabIndex = 0;
             this.btnReset.Text = "Mostrar todo";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -374,13 +390,26 @@
             // btnBack
             // 
             this.btnBack.Font = new System.Drawing.Font("Microsoft Sans Serif", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnBack.Location = new System.Drawing.Point(1010, 751);
+            this.btnBack.Location = new System.Drawing.Point(1011, 751);
+            this.btnBack.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnBack.Name = "btnBack";
-            this.btnBack.Size = new System.Drawing.Size(82, 20);
+            this.btnBack.Size = new System.Drawing.Size(83, 20);
             this.btnBack.TabIndex = 2;
             this.btnBack.Text = "Volver";
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
+            // 
+            // btnJugar
+            // 
+            this.btnJugar.Font = new System.Drawing.Font("Microsoft Sans Serif", 5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnJugar.Location = new System.Drawing.Point(922, 751);
+            this.btnJugar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnJugar.Name = "btnJugar";
+            this.btnJugar.Size = new System.Drawing.Size(83, 20);
+            this.btnJugar.TabIndex = 2;
+            this.btnJugar.Text = "Jugar";
+            this.btnJugar.UseVisualStyleBackColor = true;
+            this.btnJugar.Click += new System.EventHandler(this.btnJugar_Click);
             // 
             // PanelAdmin
             // 
@@ -390,9 +419,11 @@
             this.ClientSize = new System.Drawing.Size(1184, 773);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.lblEVA);
+            this.Controls.Add(this.btnJugar);
             this.Controls.Add(this.btnBack);
             this.Controls.Add(this.btnReset);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.Name = "PanelAdmin";
             this.ShowIcon = false;
@@ -438,5 +469,6 @@
         private System.Windows.Forms.DataGridView dgvAdmin;
         private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Button btnBack;
+        private System.Windows.Forms.Button btnJugar;
     }
 }

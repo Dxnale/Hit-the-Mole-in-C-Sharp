@@ -118,11 +118,11 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private void RunPanel()
         {
-            PanelAdmin panel = new PanelAdmin();
+            PanelAdmin panel = new PanelAdmin(textBoxNombre.Text.ToUpper(),logins, textBoxRut.Text.ToUpper());
             panel.Show();
             this.Hide();
         }
-        private void RunGame()
+        public void RunGame()
         {
             Game game = new Game(textBoxNombre.Text.ToUpper(), logins, textBoxRut.Text.ToUpper());
             game.Show();

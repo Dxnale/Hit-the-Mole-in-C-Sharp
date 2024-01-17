@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
@@ -9,12 +10,20 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 {
     public partial class PanelAdmin : Form
     {
+        private readonly string username;
+        private readonly string userRut;
+        private List<CLASEEVALUA2danielTorrealba> logins;
+
         private DataTable dataTable;
         private readonly string conectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\GIT\\PROG2EVA1javierNievesDanielTorrealba\\p2bdd.mdf;Integrated Security=True";
         private static readonly string tableName = "danielTorrealba_PERFILES";
 
-        public PanelAdmin()
+        public PanelAdmin(string username,object logs, string userRut)
         {
+            this.username = username;
+            this.userRut = userRut;
+            logins = (List<CLASEEVALUA2danielTorrealba>)logs;
+
             InitializeComponent();
         }
 
@@ -300,6 +309,13 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             Login login = new Login();
             login.Show();
             this.Close();
+        }
+
+        private void btnJugar_Click(object sender, EventArgs e)
+        {
+            Game game = new Game(username.ToUpper(), logins, userRut.ToUpper());
+            game.Show();
+            this.Hide();
         }
     }
 }
