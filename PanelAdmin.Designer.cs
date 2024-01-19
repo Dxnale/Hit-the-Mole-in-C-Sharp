@@ -81,9 +81,9 @@
             this.lblEVA.ImageAlign = System.Drawing.ContentAlignment.BottomLeft;
             this.lblEVA.Location = new System.Drawing.Point(0, 747);
             this.lblEVA.Name = "lblEVA";
-            this.lblEVA.Size = new System.Drawing.Size(165, 26);
+            this.lblEVA.Size = new System.Drawing.Size(217, 26);
             this.lblEVA.TabIndex = 5;
-            this.lblEVA.Text = "Daniel Torrealba";
+            this.lblEVA.Text = "Daniel Torrealba EVA3";
             this.lblEVA.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // apPatLabel

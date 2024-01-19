@@ -143,6 +143,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             conexion.Open();
             dataTable = GetDataTable($"select * from {tableName};", conexion);
             conexion.Close();
+
             bool rutEncontrado = false;
 
             foreach (DataRow row in dataTable.Rows)
