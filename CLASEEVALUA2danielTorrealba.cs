@@ -27,7 +27,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             this.accionF = DateTime.Now;
         }
 
-        public CLASEEVALUA2danielTorrealba(string rut,string accion, bool finPartida)
+        public CLASEEVALUA2danielTorrealba(string rut, string accion, bool finPartida)
         {
             //Constructor de la clase para el logout
             this.rut = rut;

@@ -137,7 +137,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             }
 
             string rutIngresado = textBoxRut.Text.Replace(".", "").Replace("-", "").ToUpper();
-            string passIngresado = textBoxPass.Text.ToUpper();
+            string passIngresado = textBoxPass.Text;
 
             SqlConnection conexion = new SqlConnection(conectionString);
             conexion.Open();

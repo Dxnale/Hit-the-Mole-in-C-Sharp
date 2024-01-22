@@ -33,7 +33,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private int dificultadActual;
 
         public Game(string player, object logs, string playerRut)
-        { 
+        {
             //Asigna la lista de logs recibida desde el login a la lista de logs de la clase Game
             this.LISTAEVALUA2 = (List<CLASEEVALUA2danielTorrealba>)logs;
 
@@ -65,10 +65,10 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
             TimerDificultad(Baby); // Inicia el timer de dificultad en Baby por defecto
         }
-        private void StartTimers() 
+        private void StartTimers()
         {
             // Si los timers ya existen, los detiene y los destruye
-            timerAparece?.Stop(); 
+            timerAparece?.Stop();
             timerAparece?.Dispose();
             timerDesaparece?.Stop();
             timerDesaparece?.Dispose();
@@ -167,7 +167,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             this.pictureBoxes[i, j].Click += TopoClick;
         }
         private void ActualizarImagen(PictureBox pictureBox, Bitmap imagen)
-        {   
+        {
             pictureBox.Invoke((MethodInvoker)delegate
             {
                 pictureBox.Image = imagen;
@@ -176,7 +176,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private async void TopoClick(object pictureBox, EventArgs evento)
         {
             // Castea el objeto a PictureBox para poder acceder a sus propiedades
-            PictureBox pb = (PictureBox)pictureBox; 
+            PictureBox pb = (PictureBox)pictureBox;
             // Obtiene los números de la propiedad Name del PictureBox para poder acceder a la matriz de topos
             int i = int.Parse(pb.Name[10].ToString());
             int j = int.Parse(pb.Name[11].ToString());
@@ -306,7 +306,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         {
 
             //Cada elemento de la lista debe ser almacenado en el archivo de texto con el siguiente formato: Rut, InicioSesion, FinSesion, Accion, AccionF;
-            LISTAEVALUA2.Add(new CLASEEVALUA2danielTorrealba(playerRut,"Juego Cerrado", true));
+            LISTAEVALUA2.Add(new CLASEEVALUA2danielTorrealba(playerRut, "Juego Cerrado", true));
 
             StreamWriter archivo = new StreamWriter(@"C:\\TXTS\\VIGIADANIELTORREALBA.csv", true);
 

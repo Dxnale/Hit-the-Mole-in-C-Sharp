@@ -12,7 +12,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         DataTable tablaDatos;
 
         public void ActualizarScore(string player, int score)
-        { 
+        {
             using (StreamWriter guardar = new StreamWriter(ruta, true))
             { // Escribir el nombre del jugador y su puntaje en el archivo
                 guardar.WriteLine($"{player}: {score} puntos");

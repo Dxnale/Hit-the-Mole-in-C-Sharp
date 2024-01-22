@@ -17,8 +17,9 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private DataTable dataTable;
         private readonly string conectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\GIT\\PROG2EVA1javierNievesDanielTorrealba\\p2bdd.mdf;Integrated Security=True";
         private static readonly string tableName = "danielTorrealba_PERFILES";
+        private static string rutAnterior = null;
 
-        public PanelAdmin(string username,object logs, string userRut)
+        public PanelAdmin(string username, object logs, string userRut)
         {
             this.username = username;
             this.userRut = userRut;
@@ -194,23 +195,26 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private void btnConsultar_Click(object sender, EventArgs e)
         {
-            string rut = ValidadorRUT(textBoxRutConsultar.Text);
+            string rutNuevo = ValidadorRUT(textBoxRutConsultar.Text);
 
-            if (rut == null) return;
+            if (rutNuevo == null) return;
 
-            if (rutExiste(rut) == null)
+            if (rutExiste(rutNuevo) == null)
             {
                 MessageBox.Show("El rut ingresado no se ha encontrado");
                 return;
             }
 
-            string consulta = $"select * from {tableName} where rut = '{rut}'";
+            string consulta = $"select * from {tableName} where rut = '{rutNuevo}'";
             SqlConnection conexion = new SqlConnection(conectionString);
             conexion.Open();
             dataTable = GetDataTable(consulta, conexion);
             conexion.Close();
 
             dgvAdmin.DataSource = dataTable;
+
+            rutAnterior = dataTable.Rows[0][0].ToString();
+            btnModificar.Enabled = true;
 
             textBoxRutAdd.Text = dataTable.Rows[0][0].ToString();
             textBoxNombreAdd.Text = dataTable.Rows[0][1].ToString();
@@ -258,26 +262,28 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private void btnModificar_Click(object sender, EventArgs e)
         {
-            string rut = ValidadorRUT(textBoxRutAdd.Text);
+            string rutNuevo = ValidadorRUT(textBoxRutAdd.Text);
 
-            if (rut == null) return;
+            if (rutNuevo == null) return;
 
             if (!ValidarCampos()) return;
 
-            if (rutExiste(rut) == null)
+            if (rutExiste(rutNuevo) != null && rutExiste(rutNuevo) != rutAnterior)
             {
-                MessageBox.Show("El rut ingresado no se ha encontrado");
+                MessageBox.Show("El rut ingresado ya existe");
                 return;
             }
+
+            if (rutAnterior == null) rutAnterior = rutNuevo;
 
             string nombre = textBoxNombreAdd.Text;
             string apPat = textBoxApPatAdd.Text;
             string apMat = textBoxApMatAdd.Text;
             string edad = textBoxEdadAdd.Text;
             string nivel = textBoxNivelAdd.Text;
-            string clave = GenerarClave(nombre, apPat, apMat, rut);
+            string clave = GenerarClave(nombre, apPat, apMat, rutNuevo);
 
-            string consulta = $"update {tableName} set nombre = '{nombre}', apPat = '{apPat}', apMat = '{apMat}', edad = {edad}, clave = '{clave}', Nivel = {nivel} where rut = '{rut}'";
+            string consulta = $"update {tableName} set rut = '{rutNuevo}', nombre = '{nombre}', apPat = '{apPat}', apMat = '{apMat}', edad = {edad}, clave = '{clave}', Nivel = {nivel} where rut = '{rutAnterior}'";
 
             SqlConnection conexion = new SqlConnection(conectionString);
             conexion.Open();
@@ -298,6 +304,8 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             textBoxEdadAdd.Text = "";
             textBoxRutEliminar.Text = "";
             textBoxRutConsultar.Text = "";
+            rutAnterior = null;
+            btnModificar.Enabled = false;
             PanelAdmin_Load(sender, e);
         }
         private void btnBack_Click(object sender, EventArgs e)
@@ -316,6 +324,5 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         {
             Application.Exit();
         }
-
     }
 }
