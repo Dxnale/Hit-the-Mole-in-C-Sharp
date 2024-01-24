@@ -42,6 +42,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private Entrada[] LeerScoresDesdeArchivo() // Leer el archivo y devolver un array de entradas
         {
             puntajes = new Entrada[0]; // Inicializar el array de la clase Entrada (Player, Score)
+            if (!File.Exists(ruta)) return puntajes; // Si el archivo no existe, retornar el array vacío
 
             using (StreamReader leer = new StreamReader(ruta)) // Leer el archivo
             {

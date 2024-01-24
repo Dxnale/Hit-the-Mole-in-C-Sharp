@@ -36,10 +36,8 @@
             this.nombreLabel = new System.Windows.Forms.Label();
             this.rutLabel = new System.Windows.Forms.Label();
             this.resultado = new System.Windows.Forms.Label();
-            this.lblEVA = new System.Windows.Forms.Label();
             this.textBoxPass = new System.Windows.Forms.TextBox();
             this.passLabel = new System.Windows.Forms.Label();
-            this.btnCreateTable = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // textBoxNombre
@@ -124,19 +122,6 @@
             this.resultado.Text = "Ingrese RUT";
             this.resultado.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // lblEVA
-            // 
-            this.lblEVA.AutoSize = true;
-            this.lblEVA.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.lblEVA.Font = new System.Drawing.Font("DINPro-Bold", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEVA.ForeColor = System.Drawing.SystemColors.ControlLight;
-            this.lblEVA.Location = new System.Drawing.Point(0, 358);
-            this.lblEVA.Name = "lblEVA";
-            this.lblEVA.Size = new System.Drawing.Size(217, 26);
-            this.lblEVA.TabIndex = 5;
-            this.lblEVA.Text = "Daniel Torrealba EVA3";
-            this.lblEVA.TextAlign = System.Drawing.ContentAlignment.BottomRight;
-            // 
             // textBoxPass
             // 
             this.textBoxPass.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
@@ -159,31 +144,18 @@
             this.passLabel.TabIndex = 9;
             this.passLabel.Text = "Password";
             // 
-            // btnCreateTable
-            // 
-            this.btnCreateTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCreateTable.Location = new System.Drawing.Point(356, 343);
-            this.btnCreateTable.Name = "btnCreateTable";
-            this.btnCreateTable.Size = new System.Drawing.Size(67, 29);
-            this.btnCreateTable.TabIndex = 4;
-            this.btnCreateTable.Text = "Create";
-            this.btnCreateTable.UseVisualStyleBackColor = true;
-            this.btnCreateTable.Click += new System.EventHandler(this.btnCreateTable_Click);
-            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.ClientSize = new System.Drawing.Size(435, 384);
-            this.Controls.Add(this.lblEVA);
             this.Controls.Add(this.resultado);
             this.Controls.Add(this.rutLabel);
             this.Controls.Add(this.passLabel);
             this.Controls.Add(this.nombreLabel);
             this.Controls.Add(this.textBoxRut);
             this.Controls.Add(this.labelLogin);
-            this.Controls.Add(this.btnCreateTable);
             this.Controls.Add(this.btnEnter);
             this.Controls.Add(this.textBoxPass);
             this.Controls.Add(this.textBoxNombre);
@@ -209,10 +181,8 @@
         private System.Windows.Forms.Label nombreLabel;
         private System.Windows.Forms.Label rutLabel;
         private System.Windows.Forms.Label resultado;
-        private System.Windows.Forms.Label lblEVA;
         private System.Windows.Forms.TextBox textBoxPass;
         private System.Windows.Forms.Label passLabel;
-        private System.Windows.Forms.Button btnCreateTable;
     }
 }
 

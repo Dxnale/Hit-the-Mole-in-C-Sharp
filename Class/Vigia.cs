@@ -3,7 +3,7 @@
 namespace PROG2EVA1javierNievesDanielTorrealba
 {
     //Clase vigia para registrar las acciones de los usuarios
-    internal class CLASEEVALUA2danielTorrealba
+    internal class Vigia
     {
         string rut;
         DateTime inicioSesion;
@@ -11,7 +11,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         string accion;
         DateTime accionF;
 
-        public CLASEEVALUA2danielTorrealba(string rut)
+        public Vigia(string rut)
         {
             //Constructor de la clase para el login
             this.accion = "Login Exitoso";
@@ -19,7 +19,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             this.inicioSesion = DateTime.Now;
         }
 
-        public CLASEEVALUA2danielTorrealba(string rut, string accion)
+        public Vigia(string rut, string accion)
         {
             //Constructor de la clase para las acciones
             this.rut = rut;
@@ -27,7 +27,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             this.accionF = DateTime.Now;
         }
 
-        public CLASEEVALUA2danielTorrealba(string rut, string accion, bool finPartida)
+        public Vigia(string rut, string accion, bool finPartida)
         {
             //Constructor de la clase para el logout
             this.rut = rut;

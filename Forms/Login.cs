@@ -9,7 +9,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 {
     public partial class Login : Form
     {
-        private List<CLASEEVALUA2danielTorrealba> logins = new List<CLASEEVALUA2danielTorrealba>();
+        private List<Vigia> acciones = new List<Vigia>();
 
         private static bool valido;
         private static string digito;
@@ -22,11 +22,15 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
         private readonly string conectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\GIT\\PROG2EVA1javierNievesDanielTorrealba\\p2bdd.mdf;Integrated Security=True";
 
-        private static readonly string tableName = "danielTorrealba_PERFILES";
+        private static readonly string tablaPERFILES = "PERFILES";
+        private static readonly string tablaACCIONES = "ACCIONES";
 
         public Login()
         {
             InitializeComponent();
+
+            if (!TableExists(tablaPERFILES)) CreateTablePERFILES();
+            if (!TableExists(tablaACCIONES)) CreateTableACCIONES();
         }
 
 
@@ -67,33 +71,50 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             adapter.Fill(dataTable);
             return dataTable;
         }
-        private void CreateTable()
+        private void CreateTablePERFILES()
         {
             using (SqlConnection conexion = new SqlConnection(conectionString))
             {
-                string consultaCreate = $"create table {tableName} (rut nvarchar(10) not null primary key,nombre nvarchar(30) not null, apPat nvarchar(30) not null, apMat nvarchar(30) not null, edad int not null, clave nvarchar(13) not null, Nivel int not null);";
+                string CREATE = $"create table {tablaPERFILES} (rut nvarchar(10) not null primary key,nombre nvarchar(30) not null, apPat nvarchar(30) not null, apMat nvarchar(30) not null, edad int not null, clave nvarchar(13) not null, Nivel int not null);";
 
-                string insertInit = $"insert into {tableName} (rut, nombre, apPat, apMat, edad, clave, Nivel) values ('111111111', 'LUIS', 'YAÑEZ', 'CARREÑO', 49, 'LYC11111111-1', 1);";
+                string INIT = $"insert into {tablaPERFILES} (rut, nombre, apPat, apMat, edad, clave, Nivel) values ('111111111', 'LUIS', 'YAÑEZ', 'CARREÑO', 49, 'LYC11111111-1', 1);";
 
                 conexion.Open();
-                dataTable = GetDataTable(consultaCreate, conexion);
+                dataTable = GetDataTable(CREATE, conexion);
                 conexion.Close();
 
                 conexion.Open();
-                dataTable = GetDataTable(insertInit, conexion);
+                dataTable = GetDataTable(INIT, conexion);
                 conexion.Close();
             }
         }
-        private void RunPanel()
+        private void CreateTableACCIONES()
         {
-            PanelAdmin panel = new PanelAdmin(textBoxNombre.Text.ToUpper(), logins, textBoxRut.Text.ToUpper());
-            panel.Show();
+            using (SqlConnection conexion = new SqlConnection(conectionString))
+            {
+                string CREATE = $"create table {tablaACCIONES} (num int identity(1,1) primary key not null,clave nvarchar(13) not null,rut nvarchar(10) not null, iniciosesion nvarchar(30) not null, finsesion nvarchar(30) not null, accion nvarchar(30) not null, accionf nvarchar(30) not null);";
+
+                string INIT = $"insert into {tablaACCIONES} (clave,rut,iniciosesion,finsesion,accion,accionf) values ('LYC11111111-1','111111111','01/01/0001 12:00:00 a. m.','01/01/0001 12:00:00 a. m.','Login Exitoso','01/01/0001 12:00:00 a. m.');";
+
+                conexion.Open();
+                dataTable = GetDataTable(CREATE, conexion);
+                conexion.Close();
+
+                conexion.Open();
+                dataTable = GetDataTable(INIT, conexion);
+                conexion.Close();
+            }
+        }
+        private void RunMenuUser(DataRow columna)
+        {
+            Menu menu = new Menu(columna, acciones, false);
+            menu.Show();
             this.Hide();
         }
-        public void RunGame()
+        private void RunMenuAdmin(DataRow columna)
         {
-            Game game = new Game(textBoxNombre.Text.ToUpper(), logins, textBoxRut.Text.ToUpper());
-            game.Show();
+            Menu menu = new Menu(columna, acciones, true);
+            menu.Show();
             this.Hide();
         }
         private bool TableExists(string tableName)
@@ -123,16 +144,11 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
         private void btnEnter_Click(object sender, EventArgs e)
         {
-            if (!TableExists(tableName))
-            {
-                MessageBox.Show("Aún no hay una tabla en tu base de datos.");
-                return;
-            }
 
             if (!valido || !ValidarRut(textBoxRut.Text) || textBoxNombre.Text == "" || textBoxPass.Text == "")
             {
                 MessageBox.Show("Debes ingresar un nombre, RUT y contraseña validos para poder jugar");
-                logins.Add(new CLASEEVALUA2danielTorrealba(textBoxRut.Text, "Login Fallido"));
+                acciones.Add(new Vigia(textBoxRut.Text, "Login Fallido"));
                 return;
             }
 
@@ -141,7 +157,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
             SqlConnection conexion = new SqlConnection(conectionString);
             conexion.Open();
-            dataTable = GetDataTable($"select * from {tableName};", conexion);
+            dataTable = GetDataTable($"select * from {tablaPERFILES};", conexion);
             conexion.Close();
 
             bool rutEncontrado = false;
@@ -157,40 +173,28 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                     if (nivelBD == 2)
                     {
                         rutEncontrado = true;
-                        logins.Add(new CLASEEVALUA2danielTorrealba(rutIngresado));
-                        RunGame();
+                        acciones.Add(new Vigia(rutIngresado));
+                        RunMenuUser(row);
                     }
                     else if (nivelBD == 1)
                     {
                         rutEncontrado = true;
-                        RunPanel();
-                        MessageBox.Show("Bienvenido administrador.");
+                        acciones.Add(new Vigia(rutIngresado));
+                        RunMenuAdmin(row);
                     }
                 }
                 else if (rutBD == rutIngresado && passBD != passIngresado)
                 {
                     rutEncontrado = true;
                     MessageBox.Show("Contraseña incorrecta.");
-                    logins.Add(new CLASEEVALUA2danielTorrealba(rutIngresado, "Login Fallido"));
+                    acciones.Add(new Vigia(rutIngresado, "Login Fallido"));
                 }
             }
 
             if (!rutEncontrado)
             {
                 MessageBox.Show("RUT no registrado.");
-                logins.Add(new CLASEEVALUA2danielTorrealba(textBoxRut.Text, "Login Fallido"));
-            }
-        }
-        private void btnCreateTable_Click(object sender, EventArgs e)
-        {
-            if (!TableExists(tableName))
-            {
-                CreateTable();
-                MessageBox.Show("La tabla se ha creado correctamente.");
-            }
-            else
-            {
-                MessageBox.Show("La tabla ya existe en la base de datos.");
+                acciones.Add(new Vigia(textBoxRut.Text, "Login Fallido"));
             }
         }
         private void textBoxRut_TextChanged(object sender, EventArgs e)

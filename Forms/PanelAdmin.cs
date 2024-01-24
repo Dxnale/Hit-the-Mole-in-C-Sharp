@@ -12,18 +12,18 @@ namespace PROG2EVA1javierNievesDanielTorrealba
     {
         private readonly string username;
         private readonly string userRut;
-        private List<CLASEEVALUA2danielTorrealba> logins;
+        private List<Vigia> logins;
 
         private DataTable dataTable;
         private readonly string conectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\GIT\\PROG2EVA1javierNievesDanielTorrealba\\p2bdd.mdf;Integrated Security=True";
-        private static readonly string tableName = "danielTorrealba_PERFILES";
+        private static readonly string tableName = "PERFILES";
         private static string rutAnterior = null;
 
         public PanelAdmin(string username, object logs, string userRut)
         {
             this.username = username;
             this.userRut = userRut;
-            logins = (List<CLASEEVALUA2danielTorrealba>)logs;
+            logins = (List<Vigia>)logs;
 
             InitializeComponent();
         }
@@ -157,6 +157,25 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
             return rut;
         }
+        private string claveExiste(string clave)
+        {
+            string consulta = $"select * from {tableName} where clave = '{clave}'";
+            SqlConnection conexion = new SqlConnection(conectionString);
+            conexion.Open();
+            dataTable = GetDataTable(consulta, conexion);
+            conexion.Close();
+
+            bool existe = false;
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                if (row[5].ToString() == clave) existe = true;
+            }
+
+            if (!existe) return null;
+
+            return clave;
+        }
 
 
 
@@ -171,17 +190,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            string rut = ValidadorRUT(textBoxRutEliminar.Text);
-
-            if (rut == null) return;
-
-            if (rutExiste(rut) == null)
-            {
-                MessageBox.Show("El rut ingresado no se ha encontrado");
-                return;
-            }
-
-            string consulta = $"delete from {tableName} where rut = '{rut}'";
+            string consulta = $"delete from {tableName} where rut = '{rutAnterior}'";
             SqlConnection conexion = new SqlConnection(conectionString);
             conexion.Open();
             dataTable = GetDataTable(consulta, conexion);
@@ -189,23 +198,19 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
             MessageBox.Show("Usuario eliminado correctamente");
 
-            textBoxRutEliminar.Text = "";
-
-            PanelAdmin_Load(sender, e);
+            btnReset_Click(sender, e);
         }
         private void btnConsultar_Click(object sender, EventArgs e)
         {
-            string rutNuevo = ValidadorRUT(textBoxRutConsultar.Text);
+            string claveConsultar = textBoxSoloClaveConsultar.Text;
 
-            if (rutNuevo == null) return;
-
-            if (rutExiste(rutNuevo) == null)
+            if (claveExiste(claveConsultar) == null)
             {
-                MessageBox.Show("El rut ingresado no se ha encontrado");
+                MessageBox.Show("la contaseña ingresada no se ha encontrado");
                 return;
             }
 
-            string consulta = $"select * from {tableName} where rut = '{rutNuevo}'";
+            string consulta = $"select * from {tableName} where clave = '{claveConsultar}'";
             SqlConnection conexion = new SqlConnection(conectionString);
             conexion.Open();
             dataTable = GetDataTable(consulta, conexion);
@@ -215,6 +220,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
             rutAnterior = dataTable.Rows[0][0].ToString();
             btnModificar.Enabled = true;
+            btnEliminar.Enabled = true;
 
             textBoxRutAdd.Text = dataTable.Rows[0][0].ToString();
             textBoxNombreAdd.Text = dataTable.Rows[0][1].ToString();
@@ -222,8 +228,26 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             textBoxApMatAdd.Text = dataTable.Rows[0][3].ToString();
             textBoxEdadAdd.Text = dataTable.Rows[0][4].ToString();
             textBoxNivelAdd.Text = dataTable.Rows[0][6].ToString();
-            textBoxRutConsultar.Text = "";
+            textBoxSoloClaveConsultar.Text = "";
 
+        }
+        private void btnConsultarApPatClave_Click(object sender, EventArgs e)
+        {
+            if (textBoxClaveCons.Text == "" || textBoxApPatCons.Text == "") return;
+
+            string claveConsultar = textBoxClaveCons.Text;
+            string apPatConsultar = textBoxApPatCons.Text;
+
+            string consulta = $"select * from {tableName} where clave = '{claveConsultar}' and apPat like '%{apPatConsultar}%';";
+            SqlConnection conexion = new SqlConnection(conectionString);
+            conexion.Open();
+            dataTable = GetDataTable(consulta, conexion);
+            conexion.Close();
+
+            dgvAdmin.DataSource = dataTable;
+
+            textBoxApPatCons.Text = "";
+            textBoxClaveCons.Text = "";
         }
         private void btnInsert_Click(object sender, EventArgs e)
         {
@@ -302,10 +326,10 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             textBoxNombreAdd.Text = "";
             textBoxRutAdd.Text = "";
             textBoxEdadAdd.Text = "";
-            textBoxRutEliminar.Text = "";
-            textBoxRutConsultar.Text = "";
+            textBoxSoloClaveConsultar.Text = "";
             rutAnterior = null;
             btnModificar.Enabled = false;
+            btnEliminar.Enabled = false;
             PanelAdmin_Load(sender, e);
         }
         private void btnBack_Click(object sender, EventArgs e)

@@ -11,7 +11,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
     public partial class Game : Form
     {
         //Lista de logs
-        private List<CLASEEVALUA2danielTorrealba> LISTAEVALUA2 = new List<CLASEEVALUA2danielTorrealba>();
+        private List<Vigia> LISTAEVALUA2 = new List<Vigia>();
 
         private TablaPuntos tablaPuntos = new TablaPuntos();
         private readonly Topo[,] topos = new Topo[3, 3];
@@ -35,7 +35,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         public Game(string player, object logs, string playerRut)
         {
             //Asigna la lista de logs recibida desde el login a la lista de logs de la clase Game
-            this.LISTAEVALUA2 = (List<CLASEEVALUA2danielTorrealba>)logs;
+            this.LISTAEVALUA2 = (List<Vigia>)logs;
 
             InitializeComponent(); // Inicializa los componentes base del formulario
 
@@ -187,7 +187,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 score += 1000; // Suma 1000 puntos al score
                 lblScorePuntos.Text = score.ToString();
 
-                LISTAEVALUA2.Add(new CLASEEVALUA2danielTorrealba(playerRut, $"Click Correcto en {i}-{j}")); // Agrega un log de click correcto 
+                LISTAEVALUA2.Add(new Vigia(playerRut, $"Click Correcto en {i}-{j}")); // Agrega un log de click correcto 
             }
             else
             { // Si el click fue incorrecto, cambia la imagen del topo
@@ -196,7 +196,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 lblScoreFallas.Text = fails.ToString();
                 // Actualiza el score y los fails en la tabla de scores
 
-                LISTAEVALUA2.Add(new CLASEEVALUA2danielTorrealba(playerRut, $"Click Incorrecto en {i}-{j}")); // Agrega un log de click incorrecto
+                LISTAEVALUA2.Add(new Vigia(playerRut, $"Click Incorrecto en {i}-{j}")); // Agrega un log de click incorrecto
 
                 ActualizarFails();
                 MostrarScores();
@@ -282,7 +282,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private void BtnReset_Click(object sender, EventArgs e)
         {
-            LISTAEVALUA2.Add(new CLASEEVALUA2danielTorrealba(playerRut, "Reinicio de Juego"));
+            LISTAEVALUA2.Add(new Vigia(playerRut, "Reinicio de Juego"));
             EndGame();
             StartGame();
         }
@@ -306,11 +306,11 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         {
 
             //Cada elemento de la lista debe ser almacenado en el archivo de texto con el siguiente formato: Rut, InicioSesion, FinSesion, Accion, AccionF;
-            LISTAEVALUA2.Add(new CLASEEVALUA2danielTorrealba(playerRut, "Juego Cerrado", true));
+            LISTAEVALUA2.Add(new Vigia(playerRut, "Juego Cerrado", true));
 
             StreamWriter archivo = new StreamWriter(@"C:\\TXTS\\VIGIADANIELTORREALBA.csv", true);
 
-            foreach (CLASEEVALUA2danielTorrealba log in LISTAEVALUA2)
+            foreach (Vigia log in LISTAEVALUA2)
             {
                 archivo.WriteLine($"{log.Rut},{log.InicioSesion},{log.FinSesion},{log.Accion},{log.AccionF}");
             }
