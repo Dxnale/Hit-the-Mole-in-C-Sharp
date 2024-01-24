@@ -233,16 +233,34 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private void btnConsultarApPatClave_Click(object sender, EventArgs e)
         {
-            if (textBoxClaveCons.Text == "" || textBoxApPatCons.Text == "") return;
+            string consulta;
+            SqlConnection conexion;
 
             string claveConsultar = textBoxClaveCons.Text;
             string apPatConsultar = textBoxApPatCons.Text;
 
-            string consulta = $"select * from {tableName} where clave = '{claveConsultar}' and apPat like '%{apPatConsultar}%';";
-            SqlConnection conexion = new SqlConnection(conectionString);
+            if (apPatConsultar == "")
+            {
+
+                if (claveExiste(claveConsultar) == null)
+                {
+                    MessageBox.Show("la contaseña ingresada no se ha encontrado");
+                    return;
+                }
+
+                consulta = $"select * from {tableName} where clave = '{claveConsultar}';";
+
+            }
+            else if (claveConsultar == "") 
+                consulta = $"select * from {tableName} where apPat like '%{apPatConsultar}%';";
+            else 
+                consulta = $"select * from {tableName} where clave = '{claveConsultar}' and apPat like '%{apPatConsultar}%';";
+
+            conexion = new SqlConnection(conectionString);
             conexion.Open();
             dataTable = GetDataTable(consulta, conexion);
             conexion.Close();
+
 
             dgvAdmin.DataSource = dataTable;
 
