@@ -15,9 +15,12 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private List<Vigia> logins;
 
         private DataTable dataTable;
-        private readonly string conectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\GIT\\PROG2EVA1javierNievesDanielTorrealba\\p2bdd.mdf;Integrated Security=True";
+
+        private static readonly string conectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\GIT\\PROG2EVA1javierNievesDanielTorrealba\\p2bdd.mdf;Integrated Security=True";
+
         private static readonly string tableName = "PERFILES";
-        private static string rutAnterior = null;
+        SqlConnection conexion = new SqlConnection(conectionString);
+        private static string rutConsulta = null;
 
         public PanelAdmin(string username, object logs, string userRut)
         {
@@ -141,7 +144,6 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private string rutExiste(string rut)
         {
             string consulta = $"select * from {tableName} where rut = '{rut}'";
-            SqlConnection conexion = new SqlConnection(conectionString);
             conexion.Open();
             dataTable = GetDataTable(consulta, conexion);
             conexion.Close();
@@ -160,21 +162,16 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private string claveExiste(string clave)
         {
             string consulta = $"select * from {tableName} where clave = '{clave}'";
-            SqlConnection conexion = new SqlConnection(conectionString);
             conexion.Open();
             dataTable = GetDataTable(consulta, conexion);
             conexion.Close();
 
-            bool existe = false;
-
             foreach (DataRow row in dataTable.Rows)
             {
-                if (row[5].ToString() == clave) existe = true;
+                if (row[5].ToString() == clave) return clave;
             }
 
-            if (!existe) return null;
-
-            return clave;
+            return null;
         }
 
 
@@ -182,7 +179,6 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private void PanelAdmin_Load(object sender, EventArgs e)
         {
             string consulta = $"SELECT * FROM {tableName}";
-            SqlConnection conexion = new SqlConnection(conectionString);
             conexion.Open();
             dataTable = GetDataTable(consulta, conexion);
             conexion.Close();
@@ -190,8 +186,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            string consulta = $"delete from {tableName} where rut = '{rutAnterior}'";
-            SqlConnection conexion = new SqlConnection(conectionString);
+            string consulta = $"delete from {tableName} where rut = '{rutConsulta}'";
             conexion.Open();
             dataTable = GetDataTable(consulta, conexion);
             conexion.Close();
@@ -211,14 +206,13 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             }
 
             string consulta = $"select * from {tableName} where clave = '{claveConsultar}'";
-            SqlConnection conexion = new SqlConnection(conectionString);
             conexion.Open();
             dataTable = GetDataTable(consulta, conexion);
             conexion.Close();
 
             dgvAdmin.DataSource = dataTable;
 
-            rutAnterior = dataTable.Rows[0][0].ToString();
+            rutConsulta = dataTable.Rows[0][0].ToString();
             btnModificar.Enabled = true;
             btnEliminar.Enabled = true;
 
@@ -234,29 +228,28 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private void btnConsultarApPatClave_Click(object sender, EventArgs e)
         {
             string consulta;
-            SqlConnection conexion;
 
             string claveConsultar = textBoxClaveCons.Text;
             string apPatConsultar = textBoxApPatCons.Text;
 
             if (apPatConsultar == "")
             {
-
                 if (claveExiste(claveConsultar) == null)
                 {
                     MessageBox.Show("la contaseña ingresada no se ha encontrado");
                     return;
                 }
-
                 consulta = $"select * from {tableName} where clave = '{claveConsultar}';";
-
             }
-            else if (claveConsultar == "") 
+            else if (claveConsultar == "")
+            {
                 consulta = $"select * from {tableName} where apPat like '%{apPatConsultar}%';";
-            else 
+            }
+            else
+            {
                 consulta = $"select * from {tableName} where clave = '{claveConsultar}' and apPat like '%{apPatConsultar}%';";
+            }
 
-            conexion = new SqlConnection(conectionString);
             conexion.Open();
             dataTable = GetDataTable(consulta, conexion);
             conexion.Close();
@@ -292,7 +285,6 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
             string consulta = $"insert into {tableName} (rut, nombre, apPat, apMat, edad, clave, Nivel) values ('{rut}', '{nombre}', '{apPat}', '{apMat}', {edad}, '{clave}', {nivel});";
 
-            SqlConnection conexion = new SqlConnection(conectionString);
             conexion.Open();
             dataTable = GetDataTable(consulta, conexion);
             conexion.Close();
@@ -310,13 +302,13 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
             if (!ValidarCampos()) return;
 
-            if (rutExiste(rutNuevo) != null && rutExiste(rutNuevo) != rutAnterior)
+            if (rutExiste(rutNuevo) != null && rutExiste(rutNuevo) != rutConsulta)
             {
                 MessageBox.Show("El rut ingresado ya existe");
                 return;
             }
 
-            if (rutAnterior == null) rutAnterior = rutNuevo;
+            if (rutConsulta == null) rutConsulta = rutNuevo;
 
             string nombre = textBoxNombreAdd.Text;
             string apPat = textBoxApPatAdd.Text;
@@ -325,9 +317,8 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             string nivel = textBoxNivelAdd.Text;
             string clave = GenerarClave(nombre, apPat, apMat, rutNuevo);
 
-            string consulta = $"update {tableName} set rut = '{rutNuevo}', nombre = '{nombre}', apPat = '{apPat}', apMat = '{apMat}', edad = {edad}, clave = '{clave}', Nivel = {nivel} where rut = '{rutAnterior}'";
+            string consulta = $"update {tableName} set rut = '{rutNuevo}', nombre = '{nombre}', apPat = '{apPat}', apMat = '{apMat}', edad = {edad}, clave = '{clave}', Nivel = {nivel} where rut = '{rutConsulta}'";
 
-            SqlConnection conexion = new SqlConnection(conectionString);
             conexion.Open();
             dataTable = GetDataTable(consulta, conexion);
             conexion.Close();
@@ -345,7 +336,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             textBoxRutAdd.Text = "";
             textBoxEdadAdd.Text = "";
             textBoxSoloClaveConsultar.Text = "";
-            rutAnterior = null;
+            rutConsulta = null;
             btnModificar.Enabled = false;
             btnEliminar.Enabled = false;
             PanelAdmin_Load(sender, e);

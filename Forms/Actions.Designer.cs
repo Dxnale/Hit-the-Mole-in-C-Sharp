@@ -30,8 +30,8 @@
         {
             this.lblAcciones = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.DTPickerHasta = new System.Windows.Forms.DateTimePicker();
+            this.DTPickerDesde = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnJugar = new System.Windows.Forms.Button();
@@ -69,8 +69,8 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.dateTimePicker2);
-            this.splitContainer1.Panel1.Controls.Add(this.dateTimePicker1);
+            this.splitContainer1.Panel1.Controls.Add(this.DTPickerHasta);
+            this.splitContainer1.Panel1.Controls.Add(this.DTPickerDesde);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.lblAcciones);
@@ -88,19 +88,23 @@
             this.splitContainer1.SplitterDistance = 308;
             this.splitContainer1.TabIndex = 0;
             // 
-            // dateTimePicker2
+            // DTPickerHasta
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(24, 168);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(260, 22);
-            this.dateTimePicker2.TabIndex = 15;
+            this.DTPickerHasta.Location = new System.Drawing.Point(24, 168);
+            this.DTPickerHasta.MaxDate = new System.DateTime(3000, 1, 1, 0, 0, 0, 0);
+            this.DTPickerHasta.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.DTPickerHasta.Name = "DTPickerHasta";
+            this.DTPickerHasta.Size = new System.Drawing.Size(260, 22);
+            this.DTPickerHasta.TabIndex = 15;
             // 
-            // dateTimePicker1
+            // DTPickerDesde
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(24, 119);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(260, 22);
-            this.dateTimePicker1.TabIndex = 14;
+            this.DTPickerDesde.Location = new System.Drawing.Point(24, 119);
+            this.DTPickerDesde.MaxDate = new System.DateTime(3000, 1, 1, 0, 0, 0, 0);
+            this.DTPickerDesde.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
+            this.DTPickerDesde.Name = "DTPickerDesde";
+            this.DTPickerDesde.Size = new System.Drawing.Size(260, 22);
+            this.DTPickerDesde.TabIndex = 14;
             // 
             // label2
             // 
@@ -144,6 +148,7 @@
             this.button3.TabIndex = 10;
             this.button3.Text = "Traspasar a tabla";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.btnTraspaso_Click);
             // 
             // button2
             // 
@@ -178,6 +183,7 @@
             this.button1.TabIndex = 10;
             this.button1.Text = "Consultar";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.btnBusqueda_Click);
             // 
             // btnReset
             // 
@@ -246,8 +252,8 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Acciones";
-            this.TopMost = true;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Actions_FormClosing);
+            this.Load += new System.EventHandler(this.Actions_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -269,8 +275,8 @@
         private System.Windows.Forms.Label lblEVA;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.DateTimePicker DTPickerHasta;
+        private System.Windows.Forms.DateTimePicker DTPickerDesde;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;

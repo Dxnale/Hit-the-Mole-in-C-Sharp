@@ -50,7 +50,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         public void RunActions()
         {
-            Actions actions = new Actions(nombre, rut, acciones, admin);
+            Actions actions = new Actions(nombre,clave,rut,acciones,nivel);
             actions.Show();
             this.Hide();
         }
@@ -63,7 +63,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private void btnAcciones_Click(object sender, System.EventArgs e)
         {
-           RunActions();
+            RunActions();
         }
         private void btnPerfiles_Click(object sender, System.EventArgs e)
         {
