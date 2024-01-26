@@ -35,8 +35,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnJugar = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnExcel = new System.Windows.Forms.Button();
+            this.btnPDF = new System.Windows.Forms.Button();
+            this.btnTraspaso = new System.Windows.Forms.Button();
+            this.btnFrecuencia = new System.Windows.Forms.Button();
             this.btnBack = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
@@ -75,8 +77,10 @@
             this.splitContainer1.Panel1.Controls.Add(this.label1);
             this.splitContainer1.Panel1.Controls.Add(this.lblAcciones);
             this.splitContainer1.Panel1.Controls.Add(this.btnJugar);
-            this.splitContainer1.Panel1.Controls.Add(this.button3);
-            this.splitContainer1.Panel1.Controls.Add(this.button2);
+            this.splitContainer1.Panel1.Controls.Add(this.btnExcel);
+            this.splitContainer1.Panel1.Controls.Add(this.btnPDF);
+            this.splitContainer1.Panel1.Controls.Add(this.btnTraspaso);
+            this.splitContainer1.Panel1.Controls.Add(this.btnFrecuencia);
             this.splitContainer1.Panel1.Controls.Add(this.btnBack);
             this.splitContainer1.Panel1.Controls.Add(this.button1);
             this.splitContainer1.Panel1.Controls.Add(this.btnReset);
@@ -90,7 +94,7 @@
             // 
             // DTPickerHasta
             // 
-            this.DTPickerHasta.Location = new System.Drawing.Point(24, 168);
+            this.DTPickerHasta.Location = new System.Drawing.Point(24, 159);
             this.DTPickerHasta.MaxDate = new System.DateTime(3000, 1, 1, 0, 0, 0, 0);
             this.DTPickerHasta.MinDate = new System.DateTime(2000, 1, 1, 0, 0, 0, 0);
             this.DTPickerHasta.Name = "DTPickerHasta";
@@ -110,7 +114,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.SystemColors.AppWorkspace;
-            this.label2.Location = new System.Drawing.Point(25, 150);
+            this.label2.Location = new System.Drawing.Point(25, 141);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(43, 16);
             this.label2.TabIndex = 9;
@@ -133,33 +137,58 @@
             this.btnJugar.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnJugar.Name = "btnJugar";
             this.btnJugar.Size = new System.Drawing.Size(83, 31);
-            this.btnJugar.TabIndex = 2;
+            this.btnJugar.TabIndex = 5;
             this.btnJugar.Text = "Jugar";
             this.btnJugar.UseVisualStyleBackColor = true;
             this.btnJugar.Click += new System.EventHandler(this.btnJugar_Click);
             // 
-            // button3
+            // btnExcel
             // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(24, 359);
-            this.button3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(260, 41);
-            this.button3.TabIndex = 10;
-            this.button3.Text = "Traspasar a tabla";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.btnTraspaso_Click);
+            this.btnExcel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnExcel.Location = new System.Drawing.Point(24, 369);
+            this.btnExcel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnExcel.Name = "btnExcel";
+            this.btnExcel.Size = new System.Drawing.Size(260, 41);
+            this.btnExcel.TabIndex = 3;
+            this.btnExcel.Text = "Exportar a Excel";
+            this.btnExcel.UseVisualStyleBackColor = true;
+            this.btnExcel.Click += new System.EventHandler(this.btnExcel_Click);
             // 
-            // button2
+            // btnPDF
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(24, 411);
-            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(260, 41);
-            this.button2.TabIndex = 10;
-            this.button2.Text = "Frecuencia";
-            this.button2.UseVisualStyleBackColor = true;
+            this.btnPDF.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPDF.Location = new System.Drawing.Point(24, 418);
+            this.btnPDF.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnPDF.Name = "btnPDF";
+            this.btnPDF.Size = new System.Drawing.Size(260, 41);
+            this.btnPDF.TabIndex = 4;
+            this.btnPDF.Text = "Exportar a PDF";
+            this.btnPDF.UseVisualStyleBackColor = true;
+            this.btnPDF.Click += new System.EventHandler(this.btnPDF_Click);
+            // 
+            // btnTraspaso
+            // 
+            this.btnTraspaso.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTraspaso.Location = new System.Drawing.Point(24, 271);
+            this.btnTraspaso.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnTraspaso.Name = "btnTraspaso";
+            this.btnTraspaso.Size = new System.Drawing.Size(260, 41);
+            this.btnTraspaso.TabIndex = 1;
+            this.btnTraspaso.Text = "Traspasar a tabla";
+            this.btnTraspaso.UseVisualStyleBackColor = true;
+            this.btnTraspaso.Click += new System.EventHandler(this.btnTraspaso_Click);
+            // 
+            // btnFrecuencia
+            // 
+            this.btnFrecuencia.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnFrecuencia.Location = new System.Drawing.Point(24, 320);
+            this.btnFrecuencia.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btnFrecuencia.Name = "btnFrecuencia";
+            this.btnFrecuencia.Size = new System.Drawing.Size(260, 41);
+            this.btnFrecuencia.TabIndex = 2;
+            this.btnFrecuencia.Text = "Frecuencia";
+            this.btnFrecuencia.UseVisualStyleBackColor = true;
+            this.btnFrecuencia.Click += new System.EventHandler(this.btnFrecuencia_Click);
             // 
             // btnBack
             // 
@@ -168,7 +197,7 @@
             this.btnBack.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnBack.Name = "btnBack";
             this.btnBack.Size = new System.Drawing.Size(83, 31);
-            this.btnBack.TabIndex = 2;
+            this.btnBack.TabIndex = 6;
             this.btnBack.Text = "Volver";
             this.btnBack.UseVisualStyleBackColor = true;
             this.btnBack.Click += new System.EventHandler(this.btnBack_Click);
@@ -176,11 +205,11 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(24, 213);
+            this.button1.Location = new System.Drawing.Point(24, 198);
             this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(260, 40);
-            this.button1.TabIndex = 10;
+            this.button1.Size = new System.Drawing.Size(260, 41);
+            this.button1.TabIndex = 0;
             this.button1.Text = "Consultar";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.btnBusqueda_Click);
@@ -192,7 +221,7 @@
             this.btnReset.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(83, 31);
-            this.btnReset.TabIndex = 0;
+            this.btnReset.TabIndex = 7;
             this.btnReset.Text = "Mostrar todo";
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
@@ -273,12 +302,14 @@
         private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.Button btnJugar;
         private System.Windows.Forms.Label lblEVA;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnFrecuencia;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DateTimePicker DTPickerHasta;
         private System.Windows.Forms.DateTimePicker DTPickerDesde;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btnTraspaso;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnExcel;
+        private System.Windows.Forms.Button btnPDF;
     }
 }

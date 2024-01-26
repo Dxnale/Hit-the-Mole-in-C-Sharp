@@ -194,5 +194,23 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
         {
             Application.Exit();
         }
+
+        private void btnFrecuencia_Click(object sender, EventArgs e)
+        {
+            //Actualizar la vista de la tabla segun el nivel
+            MostrarTablaSegunNivel(nivel);
+
+
+        }
+
+        private void btnExcel_Click(object sender, EventArgs e)
+        {
+            //Exportar los datos del datagridview a un archivo excel
+        }
+
+        private void btnPDF_Click(object sender, EventArgs e)
+        {
+            //Exportar los datos del datagridview a un archivo pdf
+        }
     }
 }
