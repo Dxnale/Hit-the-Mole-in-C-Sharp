@@ -79,6 +79,49 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
             dgvAdmin.DataSource = GetDataTable(consulta, conexion);
             conexion.Close();
         }
+        private DataTable GetDatosSegunRango(DateTime fechaDesde, DateTime fechaHasta)
+        {
+            string consultaporc = $"SELECT num,iniciosesion,finsesion,accionf FROM {tableName};";
+
+            conexion.Open();
+            datatable = GetDataTable(consultaporc, conexion);
+            conexion.Close();
+
+            List<int> indices = new List<int>();
+
+            foreach (DataRow row in datatable.Rows)
+            {
+                DateTime fechaInicioBD = Convert.ToDateTime(row[1]);
+                DateTime fechaFinBD = Convert.ToDateTime(row[2]);
+                DateTime fechaAccionBD = Convert.ToDateTime(row[3]);
+
+                if (fechaInicioBD >= fechaDesde && fechaInicioBD <= fechaHasta)
+                {
+                    indices.Add(int.Parse(row[0].ToString()));
+                }
+                else if (fechaFinBD >= fechaDesde && fechaFinBD <= fechaHasta)
+                {
+                    indices.Add(int.Parse(row[0].ToString()));
+                }
+                else if (fechaAccionBD >= fechaDesde && fechaAccionBD <= fechaHasta)
+                {
+                    indices.Add(int.Parse(row[0].ToString()));
+                }
+            }
+
+            if (indices.Count == 0) return null;
+
+            if (nivel == 1)
+                consultaporc = $"SELECT * FROM {tableName} where num between {indices[0]} and {indices[indices.Count - 1]};";
+            else 
+                consultaporc = $"SELECT * FROM {tableName} where clave ='{clave}' and num between {indices[0]} and {indices[indices.Count - 1]};";
+
+            conexion.Open();
+            datatable = GetDataTable(consultaporc, conexion);
+            conexion.Close();
+
+            return datatable;
+        }
         private DataTable GetDataTable(string consulta, SqlConnection conexion)
         {
             SqlDataAdapter adapter = new SqlDataAdapter(consulta, conexion);
@@ -115,18 +158,19 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
         }
         private void btnBusqueda_Click(object sender, EventArgs e)
         {
-
-            /*
             DateTime fechaInicioConvertida = DTPickerDesde.Value;
-
             DateTime fechaFinConvertida = DTPickerHasta.Value;
 
-            string consultaporc = $"SELECT * FROM {tableName} WHERE CONVERT(DATETIME, iniciosesion, 101) BETWEEN CONVERT(DATETIME, '{fechaInicioConvertida.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)}', 101) AND CONVERT(DATETIME, '{fechaFinConvertida.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)}', 101)";
+            datatable = GetDatosSegunRango(fechaInicioConvertida, fechaFinConvertida);
 
-            conexion.Open();
-            dgvAdmin.DataSource = GetDataTable(consultaporc, conexion);
-            conexion.Close();
-            */
+            if (datatable == null)
+            {
+                MessageBox.Show("No se encontraron datos en el rango de fechas seleccionado");
+                return;
+            }
+
+            dgvAdmin.DataSource = datatable;
+
         }
         private void btnJugar_Click(object sender, EventArgs e)
         {
@@ -142,7 +186,9 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
         }
         private void btnReset_Click(object sender, EventArgs e)
         {
-
+            DTPickerDesde.Value = DateTime.Now;
+            DTPickerHasta.Value = DateTime.Now;
+            Actions_Load(sender, e);
         }
         private void Actions_FormClosing(object sender, FormClosingEventArgs e)
         {
