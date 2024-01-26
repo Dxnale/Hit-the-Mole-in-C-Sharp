@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PROG2EVA1javierNievesDanielTorrealba.Class;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -20,11 +21,10 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
         private List<Vigia> vigia;
         private DataTable datatable;
 
-        private static readonly string conectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\GIT\\PROG2EVA1javierNievesDanielTorrealba\\p2bdd.mdf;Integrated Security=True";
         private static readonly string tableName = "ACCIONES";
         private const string file = @"C:\\TXTS\\VIGIADANIELTORREALBA.csv";
 
-        private SqlConnection conexion = new SqlConnection(conectionString);
+        private SqlConnection conexion = new SQLClass().Conexion;
 
         public Actions(string nombre, string clave, string rut, object logs, int nivel)
         {
@@ -68,7 +68,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
             datatable = GetDataTable(INIT, conexion);
             conexion.Close();
         }
-        private void MostrarTablaSegunNivel(int nivel)
+        private DataTable GetTablaSegunNivel(int nivel)
         {
             string consulta;
 
@@ -76,8 +76,10 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
             else consulta = $"select * from {tableName} where clave ='{clave}'";
 
             conexion.Open();
-            dgvAdmin.DataSource = GetDataTable(consulta, conexion);
+            datatable = GetDataTable(consulta, conexion);
             conexion.Close();
+
+            return datatable;
         }
         private DataTable GetDatosSegunRango(DateTime fechaDesde, DateTime fechaHasta)
         {
@@ -133,7 +135,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
 
         private void Actions_Load(object sender, EventArgs e)
         {
-            MostrarTablaSegunNivel(nivel);
+            dgvAdmin.DataSource = GetTablaSegunNivel(nivel);
         }
         private void btnTraspaso_Click(object sender, EventArgs e)
         {
@@ -154,7 +156,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
                 conexion.Close();
             }
 
-            MostrarTablaSegunNivel(nivel);
+            dgvAdmin.DataSource = GetTablaSegunNivel(nivel);
         }
         private void btnBusqueda_Click(object sender, EventArgs e)
         {
@@ -195,19 +197,15 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
             Application.Exit();
         }
 
+
         private void btnFrecuencia_Click(object sender, EventArgs e)
         {
-            //Actualizar la vista de la tabla segun el nivel
-            MostrarTablaSegunNivel(nivel);
-
 
         }
-
         private void btnExcel_Click(object sender, EventArgs e)
         {
             //Exportar los datos del datagridview a un archivo excel
         }
-
         private void btnPDF_Click(object sender, EventArgs e)
         {
             //Exportar los datos del datagridview a un archivo pdf

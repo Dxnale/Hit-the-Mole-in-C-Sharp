@@ -61,6 +61,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class\SQLClass.cs" />
     <Compile Include="Class\Vigia.cs" />
     <Compile Include="Forms\Actions.cs">
       <SubType>Form</SubType>
@@ -178,7 +179,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>p2bdd.mdf</DependentUpon>
     </Content>
-    <None Include="Resources\IPLOGO.bmp" />
     <None Include="Resources\IPLOGO.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

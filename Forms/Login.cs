@@ -1,4 +1,5 @@
-﻿using PROG2EVA1javierNievesDanielTorrealba.Forms;
+﻿using PROG2EVA1javierNievesDanielTorrealba.Class;
+using PROG2EVA1javierNievesDanielTorrealba.Forms;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -20,11 +21,10 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
         private DataTable dataTable;
 
-
-        private readonly string conectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\GIT\\PROG2EVA1javierNievesDanielTorrealba\\p2bdd.mdf;Integrated Security=True";
-
         private static readonly string tablaPERFILES = "PERFILES";
         private static readonly string tablaACCIONES = "ACCIONES";
+
+        private SqlConnection conexion = new SQLClass().Conexion;
 
         public Login()
         {
@@ -74,25 +74,21 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private void CreateTablePERFILES()
         {
-            using (SqlConnection conexion = new SqlConnection(conectionString))
-            {
-                string CREATE = $"create table {tablaPERFILES} (rut nvarchar(10) not null primary key,nombre nvarchar(30) not null, apPat nvarchar(30) not null, apMat nvarchar(30) not null, edad int not null, clave nvarchar(13) not null, Nivel int not null);";
+            string CREATE = $"create table {tablaPERFILES} (rut nvarchar(10) not null primary key,nombre nvarchar(30) not null, apPat nvarchar(30) not null, apMat nvarchar(30) not null, edad int not null, clave nvarchar(13) not null, Nivel int not null);";
 
-                string INIT = $"insert into {tablaPERFILES} (rut, nombre, apPat, apMat, edad, clave, Nivel) values ('111111111', 'LUIS', 'YAÑEZ', 'CARREÑO', 49, 'LYC11111111-1', 1);";
+            string INIT = $"insert into {tablaPERFILES} (rut, nombre, apPat, apMat, edad, clave, Nivel) values ('111111111', 'LUIS', 'YAÑEZ', 'CARREÑO', 49, 'LYC11111111-1', 1);";
 
-                conexion.Open();
-                dataTable = GetDataTable(CREATE, conexion);
-                conexion.Close();
+            conexion.Open();
+            dataTable = GetDataTable(CREATE, conexion);
+            conexion.Close();
 
-                conexion.Open();
-                dataTable = GetDataTable(INIT, conexion);
-                conexion.Close();
-            }
+            conexion.Open();
+            dataTable = GetDataTable(INIT, conexion);
+            conexion.Close();
+
         }
         private void CreateTableACCIONES()
         {
-            using (SqlConnection conexion = new SqlConnection(conectionString))
-            {
                 string CREATE = $"create table {tablaACCIONES} (num int identity(1,1) primary key not null,clave nvarchar(13) not null,rut nvarchar(10) not null, iniciosesion nvarchar(30) not null, finsesion nvarchar(30) not null, accion nvarchar(30) not null, accionf nvarchar(30) not null);";
 
                 string INIT = $"insert into {tablaACCIONES} (clave,rut,iniciosesion,finsesion,accion,accionf) values ('LYC11111111-1','111111111','01/01/0001 12:00:00 a. m.','01/01/0001 12:00:00 a. m.','Login Exitoso','01/01/0001 12:00:00 a. m.');";
@@ -104,7 +100,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
                 conexion.Open();
                 dataTable = GetDataTable(INIT, conexion);
                 conexion.Close();
-            }
+
         }
         private void RunMenuUser(DataRow columna)
         {
@@ -120,11 +116,10 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private bool TableExists(string tableName)
         {
-            SqlConnection connection = new SqlConnection(conectionString);
-            connection.Open();
+            conexion.Open();
             string consulta = $"select * from INFORMATION_SCHEMA.TABLES;";
-            dataTable = GetDataTable(consulta, connection);
-            connection.Close();
+            dataTable = GetDataTable(consulta, conexion);
+            conexion.Close();
 
             if (dataTable.Rows.Count > 0)
             {
@@ -156,7 +151,6 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             string rutIngresado = textBoxRut.Text.Replace(".", "").Replace("-", "").ToUpper();
             string passIngresado = textBoxPass.Text;
 
-            SqlConnection conexion = new SqlConnection(conectionString);
             conexion.Open();
             dataTable = GetDataTable($"select * from {tablaPERFILES};", conexion);
             conexion.Close();

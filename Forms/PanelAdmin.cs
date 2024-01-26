@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using static PROG2EVA1javierNievesDanielTorrealba.Login;
+using PROG2EVA1javierNievesDanielTorrealba.Class;
 
 namespace PROG2EVA1javierNievesDanielTorrealba
 {
@@ -16,10 +17,10 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
         private DataTable dataTable;
 
-        private static readonly string conectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=C:\\GIT\\PROG2EVA1javierNievesDanielTorrealba\\p2bdd.mdf;Integrated Security=True";
-
         private static readonly string tableName = "PERFILES";
-        SqlConnection conexion = new SqlConnection(conectionString);
+
+        private SqlConnection conexion = new SQLClass().Conexion;
+
         private static string rutConsulta = null;
 
         public PanelAdmin(string username, object logs, string userRut)
