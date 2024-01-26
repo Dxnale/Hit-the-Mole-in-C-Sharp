@@ -38,6 +38,7 @@
             this.resultado = new System.Windows.Forms.Label();
             this.textBoxPass = new System.Windows.Forms.TextBox();
             this.passLabel = new System.Windows.Forms.Label();
+            this.linkLabelCreditos = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // textBoxNombre
@@ -144,12 +145,27 @@
             this.passLabel.TabIndex = 9;
             this.passLabel.Text = "Password";
             // 
+            // linkLabelCreditos
+            // 
+            this.linkLabelCreditos.ActiveLinkColor = System.Drawing.Color.Brown;
+            this.linkLabelCreditos.AutoSize = true;
+            this.linkLabelCreditos.LinkColor = System.Drawing.SystemColors.ActiveCaption;
+            this.linkLabelCreditos.Location = new System.Drawing.Point(183, 344);
+            this.linkLabelCreditos.Name = "linkLabelCreditos";
+            this.linkLabelCreditos.Size = new System.Drawing.Size(57, 16);
+            this.linkLabelCreditos.TabIndex = 11;
+            this.linkLabelCreditos.TabStop = true;
+            this.linkLabelCreditos.Text = "Creditos";
+            this.linkLabelCreditos.VisitedLinkColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.linkLabelCreditos.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelCreditos_LinkClicked);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(19)))), ((int)(((byte)(19)))), ((int)(((byte)(19)))));
             this.ClientSize = new System.Drawing.Size(435, 384);
+            this.Controls.Add(this.linkLabelCreditos);
             this.Controls.Add(this.resultado);
             this.Controls.Add(this.rutLabel);
             this.Controls.Add(this.passLabel);
@@ -182,6 +198,7 @@
         private System.Windows.Forms.Label resultado;
         private System.Windows.Forms.TextBox textBoxPass;
         private System.Windows.Forms.Label passLabel;
+        private System.Windows.Forms.LinkLabel linkLabelCreditos;
     }
 }
 

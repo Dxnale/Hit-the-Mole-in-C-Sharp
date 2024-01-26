@@ -113,7 +113,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
 
             if (nivel == 1)
                 consultaporc = $"SELECT * FROM {tableName} where num between {indices[0]} and {indices[indices.Count - 1]};";
-            else 
+            else
                 consultaporc = $"SELECT * FROM {tableName} where clave ='{clave}' and num between {indices[0]} and {indices[indices.Count - 1]};";
 
             conexion.Open();

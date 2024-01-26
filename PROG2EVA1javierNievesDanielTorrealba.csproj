@@ -68,6 +68,12 @@
     <Compile Include="Forms\Actions.Designer.cs">
       <DependentUpon>Actions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Creditos.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Creditos.Designer.cs">
+      <DependentUpon>Creditos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Game.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +104,9 @@
     <Compile Include="Class\Topo.cs" />
     <EmbeddedResource Include="Forms\Actions.resx">
       <DependentUpon>Actions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Creditos.resx">
+      <DependentUpon>Creditos.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Game.resx">
       <DependentUpon>Game.cs</DependentUpon>
@@ -169,6 +178,8 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>p2bdd.mdf</DependentUpon>
     </Content>
+    <None Include="Resources\IPLOGO.bmp" />
+    <None Include="Resources\IPLOGO.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

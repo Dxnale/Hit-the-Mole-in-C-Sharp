@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PROG2EVA1javierNievesDanielTorrealba.Forms;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -241,6 +242,12 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private void Login_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+        private void linkLabelCreditos_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Creditos creditos = new Creditos();
+            creditos.Show();
+            this.Hide();
         }
     }
 }
