@@ -1,8 +1,12 @@
-﻿using PROG2EVA1javierNievesDanielTorrealba.Class;
+﻿using ClosedXML.Excel;
+using iTextSharp.text.pdf;
+using PROG2EVA1javierNievesDanielTorrealba.Class;
+using PROG2EVA1javierNievesDanielTorrealba.Properties;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -200,15 +204,110 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
 
         private void btnFrecuencia_Click(object sender, EventArgs e)
         {
+            //Actualizar la vista de la tabla segun el nivel
+            datatable = GetTablaSegunNivel(nivel);
+
+            int jugadores1_2 = 0;
+            int jugadores2_3 = 0;
+            int jugadores3_4 = 0;
+            int totalJugadores = 0;
+
+            foreach (DataRow row in datatable.Rows)
+            {
+                string aperturaStr = row[3].ToString().Trim();
+                string cierreStr = row[4].ToString().Trim();
+
+                aperturaStr = aperturaStr.Length >= 16 ? aperturaStr.Substring(0, 16) : aperturaStr;
+                cierreStr = cierreStr.Length >= 16 ? cierreStr.Substring(0, 16) : cierreStr;
+
+                DateTime apertura = Convert.ToDateTime(aperturaStr);
+                DateTime cierre = Convert.ToDateTime(cierreStr);
+
+                double duracionHoras = (cierre - apertura).TotalHours;
+
+                if (duracionHoras >= 0 && duracionHoras < 2)
+                {
+                    jugadores1_2++;
+                }
+                else if (duracionHoras >= 2 && duracionHoras < 3)
+                {
+                    jugadores2_3++;
+                }
+                else if (duracionHoras >= 3 && duracionHoras < 4)
+                {
+                    jugadores3_4++;
+                }
+
+                totalJugadores++;
+            }
+
+            double porcentaje1_2 = (double)jugadores1_2 / totalJugadores * 100;
+            double porcentaje2_3 = (double)jugadores2_3 / totalJugadores * 100;
+            double porcentaje3_4 = (double)jugadores3_4 / totalJugadores * 100;
+            double porcentajeTotal = (double)totalJugadores / totalJugadores * 100;
+            // Construir el mensaje para el MessageBox
+
+            string mensaje = $"Intervalo\tJugadores\tPorcentaje\n";
+
+
+            mensaje += $"1-2 horas\t{jugadores1_2}\t\t{porcentaje1_2:F2}%\n";
+            mensaje += $"2-3 horas\t{jugadores2_3}\t\t{porcentaje2_3:F2}%\n";
+            mensaje += $"3-4 horas\t{jugadores3_4}\t\t{porcentaje3_4:F2}%\n";
+            mensaje += $"Total\t\t{totalJugadores}\t\t{porcentajeTotal:F2}%";
+
+            // Mostrar el MessageBox
+            MessageBox.Show(mensaje, "Tabla de Frecuencias", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
 
         }
         private void btnExcel_Click(object sender, EventArgs e)
         {
-            //Exportar los datos del datagridview a un archivo excel
+            datatable = GetTablaSegunNivel(nivel);
+
+            using (XLWorkbook libro = new XLWorkbook())
+            {
+                Bitmap logo = Resources.logo;
+                Stream stream = new MemoryStream();
+
+                logo.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
+                stream.Position = 0;
+
+                IXLWorksheet worksheets = libro.Worksheets.Add(datatable, "Datos");
+
+                var picture = worksheets.AddPicture(stream).MoveTo(worksheets.Cell("H1"));
+
+                SaveFileDialog save = new SaveFileDialog();
+                save.Filter = "Archivos de Excel (*.xlsx)|*.xlsx";
+                save.Title = "Guardar como archivo de Excel";
+
+                if (save.ShowDialog() == DialogResult.OK)
+                {
+                    libro.SaveAs(save.FileName);
+                    MessageBox.Show("La Exportacion a sido Exitosa");
+                }
+            }
         }
         private void btnPDF_Click(object sender, EventArgs e)
         {
-            //Exportar los datos del datagridview a un archivo pdf
+            datatable = GetTablaSegunNivel(nivel);
+            //exportar tabla a pdf
+
+            using (SaveFileDialog sfd = new SaveFileDialog() { Filter = "PDF file|*.pdf", ValidateNames = true })
+            {
+                if (sfd.ShowDialog() == DialogResult.OK)
+                {
+                    iTextSharp.text.Document doc = new iTextSharp.text.Document(iTextSharp.text.PageSize.LETTER, 10, 10, 42, 35);
+                        PdfWriter.GetInstance(doc, new FileStream(sfd.FileName, FileMode.Create));
+                        doc.Open();
+                        iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(Resources.logo, System.Drawing.Imaging.ImageFormat.Png);
+                        img.ScalePercent(25f);
+                        doc.Add(img);
+                        doc.Add(new iTextSharp.text.Paragraph(" "));
+                        doc.Add(new iTextSharp.text.Paragraph(" "));
+                        doc.Add(new iTextSharp.text.Paragraph(" "));
+                        doc.Add(new iTextSharp.text.Paragraph(" "));
+                }
+            }
         }
     }
 }

@@ -83,6 +83,16 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap logo {
+            get {
+                object obj = ResourceManager.GetObject("logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap topo_FAIL {
             get {
                 object obj = ResourceManager.GetObject("topo_FAIL", resourceCulture);
