@@ -1,4 +1,5 @@
 ﻿using ClosedXML.Excel;
+using iTextSharp.text;
 using iTextSharp.text.pdf;
 using PROG2EVA1javierNievesDanielTorrealba.Class;
 using PROG2EVA1javierNievesDanielTorrealba.Properties;
@@ -97,9 +98,18 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
 
             foreach (DataRow row in datatable.Rows)
             {
-                DateTime fechaInicioBD = Convert.ToDateTime(row[1]);
-                DateTime fechaFinBD = Convert.ToDateTime(row[2]);
-                DateTime fechaAccionBD = Convert.ToDateTime(row[3]);
+
+                string inicioBD = row[1].ToString();
+                string finBD = row[2].ToString();
+                string accionfBD = row[3].ToString();
+
+                string inicioLimpioBD = inicioBD.Length >= 16 ? inicioBD.Substring(0, 16) : inicioBD;
+                string finLimpioBD = finBD.Length >= 16 ? finBD.Substring(0, 16) : finBD;
+                string accionfLimpioBD = accionfBD.Length >= 16 ? accionfBD.Substring(0, 16) : accionfBD;
+
+                DateTime fechaInicioBD = Convert.ToDateTime(inicioLimpioBD);
+                DateTime fechaFinBD = Convert.ToDateTime(finLimpioBD);
+                DateTime fechaAccionBD = Convert.ToDateTime(accionfLimpioBD);
 
                 if (fechaInicioBD >= fechaDesde && fechaInicioBD <= fechaHasta)
                 {
@@ -289,25 +299,58 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
         }
         private void btnPDF_Click(object sender, EventArgs e)
         {
-            datatable = GetTablaSegunNivel(nivel);
-            //exportar tabla a pdf
+            SaveFileDialog save = new SaveFileDialog();
+            save.Filter = "Archivos PDF (.pdf)|.pdf";
+            save.Title = "Guardar como archivo PDF";
 
-            using (SaveFileDialog sfd = new SaveFileDialog() { Filter = "PDF file|*.pdf", ValidateNames = true })
+            if (save.ShowDialog() != DialogResult.OK) return;
+
+            FileStream streamBDD = new FileStream(save.FileName, FileMode.Create);
+
+            Document file = new Document(PageSize.LETTER, 4, 4, 6, 6);
+
+            PdfWriter PDFWriter = PdfWriter.GetInstance(file, streamBDD);
+
+            PDFWriter.Open();
+            file.Open();
+
+            file.AddAuthor("Golpea al topo");
+            file.AddTitle("Exportado");
+
+            iTextSharp.text.Font standarFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+
+            Bitmap pblogo = new Bitmap(Resources.logo, new Size(80, 80));
+            iTextSharp.text.Image imagen = iTextSharp.text.Image.GetInstance(pblogo, System.Drawing.Imaging.ImageFormat.Png);
+
+            file.Add(imagen);
+            file.Add(Chunk.NEWLINE);
+
+            PdfPTable TablaAcciones = new PdfPTable(7);
+            TablaAcciones.WidthPercentage = 100;
+
+            datatable = GetTablaSegunNivel(nivel);
+
+            foreach (DataRow row in datatable.Rows)
             {
-                if (sfd.ShowDialog() == DialogResult.OK)
+                for (int i = 0; i < 7; i++)
                 {
-                    iTextSharp.text.Document doc = new iTextSharp.text.Document(iTextSharp.text.PageSize.LETTER, 10, 10, 42, 35);
-                        PdfWriter.GetInstance(doc, new FileStream(sfd.FileName, FileMode.Create));
-                        doc.Open();
-                        iTextSharp.text.Image img = iTextSharp.text.Image.GetInstance(Resources.logo, System.Drawing.Imaging.ImageFormat.Png);
-                        img.ScalePercent(25f);
-                        doc.Add(img);
-                        doc.Add(new iTextSharp.text.Paragraph(" "));
-                        doc.Add(new iTextSharp.text.Paragraph(" "));
-                        doc.Add(new iTextSharp.text.Paragraph(" "));
-                        doc.Add(new iTextSharp.text.Paragraph(" "));
+                    PdfPCell celda = new PdfPCell(new Phrase(row[i].ToString(), standarFont));
+
+                    celda.BorderWidth = 0;
+                    celda.BorderWidthBottom = 0.60f;
+
+                    TablaAcciones.AddCell(celda);
                 }
+
+                TablaAcciones.CompleteRow();
             }
+
+            file.Add(TablaAcciones);
+
+            file.Close();
+            PDFWriter.Close();
+
+            MessageBox.Show("Reporte listo \n Grande la U");
         }
     }
 }

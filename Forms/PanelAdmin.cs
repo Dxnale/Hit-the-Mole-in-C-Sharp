@@ -1,11 +1,11 @@
-﻿using System;
+﻿using PROG2EVA1javierNievesDanielTorrealba.Class;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using static PROG2EVA1javierNievesDanielTorrealba.Login;
-using PROG2EVA1javierNievesDanielTorrealba.Class;
 
 namespace PROG2EVA1javierNievesDanielTorrealba
 {

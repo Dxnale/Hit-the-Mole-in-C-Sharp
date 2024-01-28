@@ -89,17 +89,17 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         private void CreateTableACCIONES()
         {
-                string CREATE = $"create table {tablaACCIONES} (num int identity(1,1) primary key not null,clave nvarchar(13) not null,rut nvarchar(10) not null, iniciosesion nvarchar(30) not null, finsesion nvarchar(30) not null, accion nvarchar(30) not null, accionf nvarchar(30) not null);";
+            string CREATE = $"create table {tablaACCIONES} (num int identity(1,1) primary key not null,clave nvarchar(13) not null,rut nvarchar(10) not null, iniciosesion nvarchar(30) not null, finsesion nvarchar(30) not null, accion nvarchar(30) not null, accionf nvarchar(30) not null);";
 
-                string INIT = $"insert into {tablaACCIONES} (clave,rut,iniciosesion,finsesion,accion,accionf) values ('LYC11111111-1','111111111','01/01/0001 12:00:00 a. m.','01/01/0001 12:00:00 a. m.','Login Exitoso','01/01/0001 12:00:00 a. m.');";
+            string INIT = $"insert into {tablaACCIONES} (clave,rut,iniciosesion,finsesion,accion,accionf) values ('LYC11111111-1','111111111','01/01/0001 12:00:00 a. m.','01/01/0001 12:00:00 a. m.','Login Exitoso','01/01/0001 12:00:00 a. m.');";
 
-                conexion.Open();
-                dataTable = GetDataTable(CREATE, conexion);
-                conexion.Close();
+            conexion.Open();
+            dataTable = GetDataTable(CREATE, conexion);
+            conexion.Close();
 
-                conexion.Open();
-                dataTable = GetDataTable(INIT, conexion);
-                conexion.Close();
+            conexion.Open();
+            dataTable = GetDataTable(INIT, conexion);
+            conexion.Close();
 
         }
         private void RunMenuUser(DataRow columna)

@@ -50,7 +50,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         }
         public void RunActions()
         {
-            Actions actions = new Actions(nombre,clave,rut,acciones,nivel);
+            Actions actions = new Actions(nombre, clave, rut, acciones, nivel);
             actions.Show();
             this.Hide();
         }
