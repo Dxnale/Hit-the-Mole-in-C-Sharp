@@ -10,12 +10,9 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private List<Vigia> acciones = new List<Vigia>();
         private string rut;
         private string nombre;
-        private string apellidoPat;
-        private string apellidoMat;
         private string clave;
         private int nivel;
         private bool admin;
-
 
         public Menu(DataRow datos, object log, bool admin)
         {
@@ -25,8 +22,6 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
             rut = datos[0].ToString();
             nombre = datos[1].ToString();
-            apellidoPat = datos[2].ToString();
-            apellidoMat = datos[3].ToString();
             clave = datos[5].ToString();
             nivel = int.Parse(datos[6].ToString());
 
@@ -34,7 +29,6 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             btnPerfiles.Visible = admin;
 
         }
-
 
         private void RunPanel()
         {

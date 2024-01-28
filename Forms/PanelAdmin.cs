@@ -14,13 +14,9 @@ namespace PROG2EVA1javierNievesDanielTorrealba
         private readonly string username;
         private readonly string userRut;
         private List<Vigia> logins;
-
         private DataTable dataTable;
-
         private static readonly string tableName = "PERFILES";
-
         private SqlConnection conexion = new SQLClass().Conexion;
-
         private static string rutConsulta = null;
 
         public PanelAdmin(string username, object logs, string userRut)
@@ -31,7 +27,6 @@ namespace PROG2EVA1javierNievesDanielTorrealba
 
             InitializeComponent();
         }
-
 
 
         private DataTable GetDataTable(string consulta, SqlConnection conexion)
@@ -289,7 +284,6 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             conexion.Open();
             dataTable = GetDataTable(consulta, conexion);
             conexion.Close();
-            dgvAdmin.DataSource = dataTable;
 
             MessageBox.Show("Usuario agregado correctamente");
 

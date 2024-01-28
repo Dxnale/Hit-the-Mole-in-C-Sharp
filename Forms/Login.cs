@@ -102,15 +102,15 @@ namespace PROG2EVA1javierNievesDanielTorrealba
             conexion.Close();
 
         }
-        private void RunMenuUser(DataRow columna)
+        private void RunMenuUser(DataRow data)
         {
-            Menu menu = new Menu(columna, acciones, false);
+            Menu menu = new Menu(data, acciones, false);
             menu.Show();
             this.Hide();
         }
-        private void RunMenuAdmin(DataRow columna)
+        private void RunMenuAdmin(DataRow data)
         {
-            Menu menu = new Menu(columna, acciones, true);
+            Menu menu = new Menu(data, acciones, true);
             menu.Show();
             this.Hide();
         }

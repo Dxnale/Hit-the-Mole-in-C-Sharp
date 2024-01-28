@@ -151,6 +151,12 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
         {
             dgvAdmin.DataSource = GetTablaSegunNivel(nivel);
         }
+        private void Actions_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Application.Exit();
+        }
+
+
         private void btnTraspaso_Click(object sender, EventArgs e)
         {
             LimpiarTabla(tableName);
@@ -188,30 +194,6 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
             dgvAdmin.DataSource = datatable;
 
         }
-        private void btnJugar_Click(object sender, EventArgs e)
-        {
-            Game game = new Game(nombre.ToUpper(), vigia, rut);
-            game.Show();
-            this.Hide();
-        }
-        private void btnBack_Click(object sender, EventArgs e)
-        {
-            Login login = new Login();
-            login.Show();
-            this.Hide();
-        }
-        private void btnReset_Click(object sender, EventArgs e)
-        {
-            DTPickerDesde.Value = DateTime.Now;
-            DTPickerHasta.Value = DateTime.Now;
-            Actions_Load(sender, e);
-        }
-        private void Actions_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            Application.Exit();
-        }
-
-
         private void btnFrecuencia_Click(object sender, EventArgs e)
         {
             //Actualizar la vista de la tabla segun el nivel
@@ -257,7 +239,7 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
             double porcentajeTotal = (double)totalJugadores / totalJugadores * 100;
             // Construir el mensaje para el MessageBox
 
-            string mensaje = $"Intervalo\tJugadores\tPorcentaje\n";
+            string mensaje = $"Intervalo\t    Sesiones\tPorcentaje\n";
 
 
             mensaje += $"1-2 horas\t{jugadores1_2}\t\t{porcentaje1_2:F2}%\n";
@@ -352,5 +334,28 @@ namespace PROG2EVA1javierNievesDanielTorrealba.Forms
 
             MessageBox.Show("Reporte listo \n Grande la U");
         }
+
+
+
+        private void btnJugar_Click(object sender, EventArgs e)
+        {
+            Game game = new Game(nombre.ToUpper(), vigia, rut);
+            game.Show();
+            this.Hide();
+        }
+        private void btnBack_Click(object sender, EventArgs e)
+        {
+            Login login = new Login();
+            login.Show();
+            this.Hide();
+        }
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            DTPickerDesde.Value = DateTime.Now;
+            DTPickerHasta.Value = DateTime.Now;
+            Actions_Load(sender, e);
+        }
+
+
     }
 }
